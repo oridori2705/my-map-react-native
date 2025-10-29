@@ -1,15 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {StyleSheet, Text} from 'react-native';
 
-function LoginScreen() {
+const MapHomeScreen = () => {
   return (
     <SafeAreaView>
-      <Text>LoginScreen</Text>
+      <Text>MapHomeScreen</Text>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({});
 
-export default LoginScreen;
+export default MapHomeScreen;

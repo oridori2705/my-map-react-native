@@ -2,14 +2,14 @@ import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-function LoginScreen() {
+const FeedDetailScreen = () => {
   return (
     <SafeAreaView>
-      <Text>LoginScreen</Text>
+      <Text>FeedDetailScreen</Text>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({});
 
-export default LoginScreen;
+export default FeedDetailScreen;
