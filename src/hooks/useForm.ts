@@ -20,7 +20,7 @@ function useForm<T>({initialValue, validate}: UseFormProps<T>) {
 
   const getTextInputProps = (name: keyof T) => {
     const value = values[name];
-    const onChangeText = (value: string) => handleChangeValue(name, value);
+    const onChangeText = (text: string) => handleChangeValue(name, text);
     const onBlur = () => handleBlur(name);
 
     return {value, onChangeText, onBlur};

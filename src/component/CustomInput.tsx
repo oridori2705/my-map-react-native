@@ -1,16 +1,21 @@
 import {colors} from '@/constant/colors';
-import React from 'react';
+import React, {Ref} from 'react';
 import {StyleSheet, Text, TextInput, TextInputProps, View} from 'react-native';
 
 interface CustomInputProps extends TextInputProps {
+  ref?: Ref<TextInput>;
   error?: string;
   touched?: boolean;
 }
 
-const CustomInput = ({error, touched, ...props}: CustomInputProps) => {
+const CustomInput = ({ref, error, touched, ...props}: CustomInputProps) => {
   return (
     <View>
       <TextInput
+        ref={ref}
+        spellCheck={false}
+        autoCorrect={false}
+        autoCapitalize="none"
         style={[styles.input, Boolean(error) && styles.inputError]}
         {...props}
       />
