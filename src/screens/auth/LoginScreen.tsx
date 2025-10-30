@@ -1,15 +1,50 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
+
+import CustomButton from '@/component/CustomButton';
+import CustomInput from '@/component/CustomInput';
+import useForm from '@/hooks/useForm';
+import {validateLogin} from '../../utils/validation';
 
 function LoginScreen() {
+  const login = useForm({
+    initialValue: {email: '', password: ''},
+    validate: validateLogin,
+  });
+
   return (
-    <SafeAreaView>
-      <Text>LoginScreen</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.inputContainer}>
+        <CustomInput
+          placeholder="이메일"
+          touched={login.touched.email}
+          error={login.errors.email}
+          {...login.getTextInputProps('email')}
+        />
+        <CustomInput
+          secureTextEntry
+          textContentType="oneTimeCode"
+          placeholder="비밀번호"
+          maxLength={20}
+          touched={login.touched.password}
+          error={login.errors.password}
+          {...login.getTextInputProps('password')}
+        />
+      </View>
+      <CustomButton label="로그인" variant="filled" size="large" />
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 30,
+  },
+  inputContainer: {
+    gap: 20,
+    marginBottom: 30,
+  },
+});
 
 export default LoginScreen;
