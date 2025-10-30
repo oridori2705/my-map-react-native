@@ -1,0 +1,35 @@
+import {NavigatorScreenParams} from '@react-navigation/native';
+
+export type MapStackParamList = {
+  MapHome: undefined;
+  AddLocation: undefined;
+  SearchLocation: undefined;
+};
+
+export type AuthStackParamList = {
+  AuthHome: undefined;
+  Login: undefined;
+  Signup: undefined;
+};
+
+export type FeedStackParamList = {
+  FeedList: undefined;
+  FeedDetail: {id: number};
+  FeedFavorite: undefined;
+  EditLocation: {id: number};
+};
+
+export type MainDrawerParamList = {
+  Map: NavigatorScreenParams<MapStackParamList>;
+  Feed: NavigatorScreenParams<FeedStackParamList>;
+  Calendar: undefined;
+};
+
+declare global {
+  namespace ReactNavigation {
+    //React Navigation의 내부에서는 RootParamList 인터페이스를 전역적으로 참조
+    //“현재 네비게이션 트리의 모든 가능한 경로와 파라미터 타입”을 알아낸다.
+    //그리고 MainDrawerParamList타입을 상속시켜서 확장
+    interface RootParamList extends MainDrawerParamList {}
+  }
+}
