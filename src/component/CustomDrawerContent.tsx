@@ -12,7 +12,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {colors} from '../constant/colors';
+import {colors} from '@/constant/colors';
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
   return (
