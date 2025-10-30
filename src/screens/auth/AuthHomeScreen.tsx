@@ -3,6 +3,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {Pressable, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {AuthStackParamList} from '@/types/navigation';
+import CustomButton from '@/component/CustomButton';
 
 type Navigation = StackNavigationProp<AuthStackParamList>;
 
@@ -11,9 +12,10 @@ function AuthHomeScreen() {
 
   return (
     <SafeAreaView>
-      <Pressable onPress={() => navigation.navigate('Login')}>
-        <Text>로그인으로 이동</Text>
-      </Pressable>
+      <CustomButton
+        label="이메일 로그인"
+        onPress={() => navigation.navigate('Login')}
+      />
     </SafeAreaView>
   );
 }
