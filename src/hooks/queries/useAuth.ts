@@ -3,10 +3,17 @@ import queryClient from '@/api/queryClient';
 import {removeEncryptStorage, setEncryptStorage} from '@/utils/encryptStorage';
 import {useEffect} from 'react';
 import {Profile} from '@/types/domain';
-import {getAccessToken, getProfile, postLogin, postSignup} from '@/api/auth';
+import {
+  getAccessToken,
+  getProfile,
+  logout,
+  postLogin,
+  postSignup,
+} from '@/api/auth';
 import {UseMutationCustomOptions, UseQueryCustomOptions} from '@/types/api';
 import {removeHeader, setHeader} from '@/utils/header';
 import {numbers} from '@/constant/number';
+import {queryKeys, storageKeys} from '../../constant/key';
 
 /**
  * 회원가입 훅
@@ -93,6 +100,20 @@ function useGetProfile(queryOptions?: UseQueryCustomOptions<Profile>) {
   });
 }
 
+//로그아웃
+function useLogout(mutationOptions?: UseMutationCustomOptions) {
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: async () => {
+      removeHeader('Authorization');
+      await removeEncryptStorage(storageKeys.REFRESH_TOKEN);
+      //쿼리를 처음 상태로 되돌리고, 다음에 다시 호출되면 새로 데이터를 가져와라.
+      queryClient.resetQueries({queryKey: [queryKeys.AUTH]});
+    },
+    ...mutationOptions,
+  });
+}
+
 function useAuth() {
   const signupMutation = useSignup();
   const loginMutation = useLogin();
@@ -100,8 +121,20 @@ function useAuth() {
   const {data, isSuccess: isLogin} = useGetProfile({
     enabled: refreshTokenQuery.isSuccess,
   });
+  const logoutMutation = useLogout();
 
-  return {signupMutation, loginMutation, isLogin};
+  return {
+    auth: {
+      id: data?.id || '',
+      nickname: data?.nickname || '',
+      email: data?.email || '',
+      imageUri: data?.imageUri || '',
+    },
+    signupMutation,
+    loginMutation,
+    isLogin,
+    logoutMutation,
+  };
 }
 
 export default useAuth;

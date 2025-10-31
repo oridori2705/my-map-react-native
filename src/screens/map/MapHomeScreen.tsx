@@ -1,15 +1,20 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {StyleSheet, Text} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
 
-const MapHomeScreen = () => {
+import DrawerButton from '@/component/DrawerButton';
+import useAuth from '@/hooks/queries/useAuth';
+
+function MapHomeScreen() {
+  const {logoutMutation} = useAuth();
+
   return (
     <SafeAreaView>
       <Text>MapHomeScreen</Text>
+      <DrawerButton />
+      <Text onPress={() => logoutMutation.mutate(null)}>로그아웃</Text>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({});
 
