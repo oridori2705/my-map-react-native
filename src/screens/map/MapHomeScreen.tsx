@@ -1,8 +1,9 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 
 import DrawerButton from '@/component/DrawerButton';
 import useAuth from '@/hooks/queries/useAuth';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function MapHomeScreen() {
   const {logoutMutation} = useAuth();
