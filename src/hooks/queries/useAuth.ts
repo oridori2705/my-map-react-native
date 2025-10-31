@@ -14,6 +14,7 @@ import {UseMutationCustomOptions, UseQueryCustomOptions} from '@/types/api';
 import {removeHeader, setHeader} from '@/utils/header';
 import {numbers} from '@/constant/number';
 import {queryKeys, storageKeys} from '../../constant/key';
+import {showErrorToast} from '../../utils/toast';
 
 /**
  * 회원가입 훅
@@ -23,6 +24,9 @@ import {queryKeys, storageKeys} from '../../constant/key';
 function useSignup(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: postSignup, // 회원가입 요청 함수
+    onError: error => {
+      showErrorToast(error);
+    },
     ...mutationOptions, // 외부에서 전달된 옵션 병합
   });
 }
@@ -36,6 +40,9 @@ function useSignup(mutationOptions?: UseMutationCustomOptions) {
 function useLogin(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: postLogin, // 로그인 요청 함수
+    onError: error => {
+      showErrorToast(error);
+    },
     onSuccess: async ({accessToken, refreshToken}) => {
       // 1. accessToken을 Authorization 헤더에 설정(utils/header.ts에 존재하는 함수)
       setHeader('Authorization', `Bearer ${accessToken}`);
@@ -104,6 +111,9 @@ function useGetProfile(queryOptions?: UseQueryCustomOptions<Profile>) {
 function useLogout(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: logout,
+    onError: error => {
+      showErrorToast(error);
+    },
     onSuccess: async () => {
       removeHeader('Authorization');
       await removeEncryptStorage(storageKeys.REFRESH_TOKEN);

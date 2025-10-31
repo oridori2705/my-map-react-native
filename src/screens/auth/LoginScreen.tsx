@@ -17,6 +17,10 @@ function LoginScreen() {
   const {loginMutation} = useAuth();
 
   const handleSubmit = () => {
+    if (!login.isValid()) {
+      return;
+    }
+
     loginMutation.mutate(login.values);
   };
 

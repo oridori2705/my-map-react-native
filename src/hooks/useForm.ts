@@ -18,6 +18,12 @@ function useForm<T>({initialValue, validate}: UseFormProps<T>) {
     setTouched(prev => ({...prev, [name]: true}));
   };
 
+  const isValid = () => {
+    const newErrors = validate(values);
+    setErrors(newErrors);
+    return !Object.values(newErrors).some(error => error !== '');
+  };
+
   const getTextInputProps = (name: keyof T) => {
     const value = values[name];
     const onChangeText = (text: string) => handleChangeValue(name, text);
@@ -31,7 +37,7 @@ function useForm<T>({initialValue, validate}: UseFormProps<T>) {
     setErrors(newErrors);
   }, [validate, values]);
 
-  return {values, touched, errors, getTextInputProps};
+  return {values, touched, errors, getTextInputProps, isValid};
 }
 
 export default useForm;

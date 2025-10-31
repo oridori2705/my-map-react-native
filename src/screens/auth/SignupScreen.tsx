@@ -18,6 +18,9 @@ function SignupScreen() {
   const {signupMutation, loginMutation} = useAuth();
 
   const handleSubmit = () => {
+    if (!signup.isValid()) {
+      return;
+    }
     const {email, password} = signup.values;
 
     signupMutation.mutate(
