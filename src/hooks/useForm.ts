@@ -5,7 +5,7 @@ interface UseFormProps<T> {
   validate: (values: T) => Record<keyof T, string>; // 추가
 }
 
-function useForm<T>({initialValue, validate}: UseFormProps<T>) {
+const useForm = <T>({initialValue, validate}: UseFormProps<T>) => {
   const [values, setValues] = useState(initialValue);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -38,6 +38,6 @@ function useForm<T>({initialValue, validate}: UseFormProps<T>) {
   }, [validate, values]);
 
   return {values, touched, errors, getTextInputProps, isValid};
-}
+};
 
 export default useForm;
