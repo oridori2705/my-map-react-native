@@ -41,6 +41,7 @@ const MapHomeScreen = () => {
         color={colors.WHITE}
       />
       <MapView
+        googleMapId="b5551905620617d6819d062f"
         style={styles.container}
         ref={mapRef}
         region={{
