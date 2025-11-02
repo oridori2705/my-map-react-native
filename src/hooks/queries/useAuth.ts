@@ -14,7 +14,7 @@ import {UseMutationCustomOptions, UseQueryCustomOptions} from '@/types/api';
 import {removeHeader, setHeader} from '@/utils/header';
 import {numbers} from '@/constant/number';
 import {queryKeys, storageKeys} from '../../constant/key';
-import {showErrorToast} from '../../utils/toast';
+import Toast from 'react-native-toast-message';
 
 /**
  * 회원가입 훅
@@ -25,7 +25,11 @@ function useSignup(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: postSignup, // 회원가입 요청 함수
     onError: error => {
-      showErrorToast(error);
+      Toast.show({
+        type: 'error',
+        text1: error.response?.data?.message || '회원가입에 실패했습니다.',
+        position: 'bottom',
+      });
     },
     ...mutationOptions, // 외부에서 전달된 옵션 병합
   });
@@ -41,7 +45,11 @@ function useLogin(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: postLogin, // 로그인 요청 함수
     onError: error => {
-      showErrorToast(error);
+      Toast.show({
+        type: 'error',
+        text1: error.response?.data?.message || '로그인에 실패했습니다.',
+        position: 'bottom',
+      });
     },
     onSuccess: async ({accessToken, refreshToken}) => {
       // 1. accessToken을 Authorization 헤더에 설정(utils/header.ts에 존재하는 함수)
@@ -112,7 +120,11 @@ function useLogout(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: logout,
     onError: error => {
-      showErrorToast(error);
+      Toast.show({
+        type: 'error',
+        text1: error.response?.data?.message || '로그아웃에 실패했습니다.',
+        position: 'bottom',
+      });
     },
     onSuccess: async () => {
       removeHeader('Authorization');
