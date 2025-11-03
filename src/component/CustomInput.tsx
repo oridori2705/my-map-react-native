@@ -6,9 +6,16 @@ interface InputFieldProps extends TextInputProps {
   ref?: Ref<TextInput>;
   error?: string;
   touched?: boolean;
+  disabled?: boolean;
 }
 
-function InputField({ref, error, touched, ...props}: InputFieldProps) {
+const InputField = ({
+  ref,
+  error,
+  touched,
+  disabled = false,
+  ...props
+}: InputFieldProps) => {
   return (
     <View>
       <TextInput
@@ -19,6 +26,7 @@ function InputField({ref, error, touched, ...props}: InputFieldProps) {
         autoCorrect={false}
         style={[
           styles.input,
+          disabled && styles.disabled,
           props.multiline && styles.multiLine,
           touched && Boolean(error) && styles.inputError,
         ]}
@@ -27,7 +35,7 @@ function InputField({ref, error, touched, ...props}: InputFieldProps) {
       {touched && Boolean(error) && <Text style={styles.error}>{error}</Text>}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   input: {
@@ -52,6 +60,10 @@ const styles = StyleSheet.create({
     color: colors.RED_500,
     fontSize: 12,
     paddingTop: 5,
+  },
+  disabled: {
+    backgroundColor: colors.GRAY_200,
+    color: colors.GRAY_700,
   },
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 
 import {MapStackParamList} from '@/types/navigation';
@@ -7,12 +7,13 @@ import CustomInput from '@/component/CustomInput';
 import CustomButton from '@/component/CustomButton';
 import useForm from '@/hooks/useForm';
 import {validateAddPost} from '@/utils/validation';
+import useGetAddress from '@/hooks/useGetAddress';
 
 type Props = StackScreenProps<MapStackParamList, 'AddLocation'>;
 
-function AddLocationScreen({route}: Props) {
+const AddLocationScreen = ({route}: Props) => {
   const {location} = route.params;
-
+  const address = useGetAddress(location);
   const postForm = useForm({
     initialValue: {
       title: '',
@@ -23,7 +24,7 @@ function AddLocationScreen({route}: Props) {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <CustomInput />
+      <CustomInput disabled value={address} />
       <CustomButton variant="outlined" label="날짜 선택" />
       <CustomInput
         placeholder="제목을 입력하세요."
@@ -40,7 +41,7 @@ function AddLocationScreen({route}: Props) {
       />
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
