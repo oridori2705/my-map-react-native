@@ -40,6 +40,7 @@ export const validateAddPost = (values: {title: string}) => {
   const errors = {
     title: '',
     description: '',
+    date: '',
   };
 
   if (values.title.trim() === '') {

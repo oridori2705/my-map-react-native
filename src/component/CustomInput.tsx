@@ -9,7 +9,7 @@ interface InputFieldProps extends TextInputProps {
   disabled?: boolean;
 }
 
-const InputField = ({
+const CustomInput = ({
   ref,
   error,
   touched,
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InputField;
+export default CustomInput;
