@@ -16,7 +16,7 @@ const iosPermissions = {
   PHOTO: PERMISSIONS.IOS.PHOTO_LIBRARY,
 };
 
-function usePermission(type: PermissionType) {
+const usePermission = (type: PermissionType) => {
   useEffect(() => {
     (async () => {
       const isAndroid = Platform.OS === 'android';
@@ -50,6 +50,6 @@ function usePermission(type: PermissionType) {
       }
     })();
   }, [type]);
-}
+};
 
 export default usePermission;

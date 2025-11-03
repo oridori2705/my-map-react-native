@@ -8,7 +8,7 @@ import {useRef} from 'react';
 import useAuth from '@/hooks/queries/useAuth';
 import {validateSignup} from '@/utils/validation';
 
-function SignupScreen() {
+const SignupScreen = () => {
   const passwordRef = useRef<TextInput | null>(null);
   const passwordConfirmRef = useRef<TextInput | null>(null);
   const signup = useForm({
@@ -73,7 +73,7 @@ function SignupScreen() {
       />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

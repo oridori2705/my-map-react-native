@@ -10,12 +10,12 @@ interface CustomMarkerProps extends MapMarkerProps {
   score?: number;
 }
 
-function CustomMarker({
+const CustomMarker = ({
   coordinate,
   color,
   score = 5,
   ...props
-}: CustomMarkerProps) {
+}: CustomMarkerProps) => {
   return (
     <Marker coordinate={coordinate} {...props}>
       <View style={styles.container}>
@@ -29,7 +29,7 @@ function CustomMarker({
       </View>
     </Marker>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

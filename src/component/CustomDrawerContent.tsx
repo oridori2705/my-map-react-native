@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import {colors} from '@/constant/colors';
 
-function CustomDrawerContent(props: DrawerContentComponentProps) {
+const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   return (
     <SafeAreaView style={styles.container}>
       <DrawerContentScrollView
@@ -37,7 +37,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

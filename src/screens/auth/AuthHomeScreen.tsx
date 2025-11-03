@@ -8,7 +8,7 @@ import {colors} from '@/constant/colors';
 
 type Navigation = StackNavigationProp<AuthStackParamList>;
 
-function AuthHomeScreen() {
+const AuthHomeScreen = () => {
   const navigation = useNavigation<Navigation>();
 
   return (
@@ -31,7 +31,7 @@ function AuthHomeScreen() {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

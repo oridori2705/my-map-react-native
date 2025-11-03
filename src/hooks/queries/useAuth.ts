@@ -21,7 +21,7 @@ import Toast from 'react-native-toast-message';
  * - React Query의 useMutation을 이용해 postSignup API 호출
  * - mutationOptions를 인자로 받아 커스터마이징 가능
  */
-function useSignup(mutationOptions?: UseMutationCustomOptions) {
+const useSignup = (mutationOptions?: UseMutationCustomOptions) => {
   return useMutation({
     mutationFn: postSignup, // 회원가입 요청 함수
     onError: error => {
@@ -33,7 +33,7 @@ function useSignup(mutationOptions?: UseMutationCustomOptions) {
     },
     ...mutationOptions, // 외부에서 전달된 옵션 병합
   });
-}
+};
 
 /**
  * 로그인 훅
@@ -41,7 +41,7 @@ function useSignup(mutationOptions?: UseMutationCustomOptions) {
  * - refreshToken을 안전하게 로컬 스토리지(EncryptStorage)에 저장
  * - 로그인 이후 accessToken 자동 갱신 쿼리를 강제 실행
  */
-function useLogin(mutationOptions?: UseMutationCustomOptions) {
+const useLogin = (mutationOptions?: UseMutationCustomOptions) => {
   return useMutation({
     mutationFn: postLogin, // 로그인 요청 함수
     onError: error => {
@@ -63,7 +63,7 @@ function useLogin(mutationOptions?: UseMutationCustomOptions) {
     },
     ...mutationOptions, // 외부에서 전달된 옵션 병합
   });
-}
+};
 
 /**
  * refreshToken을 이용해 주기적으로 accessToken을 갱신하는 훅
@@ -71,7 +71,7 @@ function useLogin(mutationOptions?: UseMutationCustomOptions) {
  * - 성공 시 헤더와 EncryptStorage에 토큰 갱신
  * - 실패 시 저장된 토큰 제거 (로그아웃 상태로 간주)
  */
-function useGetRefreshToken() {
+const useGetRefreshToken = () => {
   const {data, isSuccess, isError} = useQuery({
     queryKey: ['auth', 'getAccessToken'], // accessToken 갱신용 쿼리 키
     queryFn: getAccessToken, // refreshToken으로 accessToken 재발급 API
@@ -100,23 +100,23 @@ function useGetRefreshToken() {
   }, [isError]);
 
   return {isSuccess, isError};
-}
+};
 
 /**
  * 사용자 프로필 정보를 가져오는 훅
  * - accessToken이 유효한 상태에서 getProfile API를 호출
  * - 로그인 성공 이후 유저 정보를 불러오는 데 사용
  */
-function useGetProfile(queryOptions?: UseQueryCustomOptions<Profile>) {
+const useGetProfile = (queryOptions?: UseQueryCustomOptions<Profile>) => {
   return useQuery({
     queryFn: getProfile, // 프로필 조회 API
     queryKey: ['auth', 'getProfile'], // 캐싱용 쿼리 키
     ...queryOptions, // 옵션 병합 (enabled 등)
   });
-}
+};
 
 //로그아웃
-function useLogout(mutationOptions?: UseMutationCustomOptions) {
+const useLogout = (mutationOptions?: UseMutationCustomOptions) => {
   return useMutation({
     mutationFn: logout,
     onError: error => {
@@ -134,9 +134,9 @@ function useLogout(mutationOptions?: UseMutationCustomOptions) {
     },
     ...mutationOptions,
   });
-}
+};
 
-function useAuth() {
+const useAuth = () => {
   const signupMutation = useSignup();
   const loginMutation = useLogin();
   const refreshTokenQuery = useGetRefreshToken();
@@ -157,6 +157,6 @@ function useAuth() {
     isLogin,
     logoutMutation,
   };
-}
+};
 
 export default useAuth;

@@ -6,7 +6,7 @@ import {AppState} from 'react-native';
  * - 앱이 백그라운드 → 다시 활성화(포그라운드)될 때 `isComeback`을 true로 설정
  * - 앱이 활성화 → 백그라운드로 갈 때 `isComeback`을 false로 설정
  */
-function useAppState() {
+const useAppState = () => {
   // 현재 앱 상태를 저장할 ref (초기값: AppState.currentState)
   // AppState.currentState는 'active', 'background', 'inactive' 중 하나의 문자열
   const appState = useRef(AppState.currentState);
@@ -51,6 +51,6 @@ function useAppState() {
 
   // comeback 여부를 반환
   return {isComeback};
-}
+};
 
 export default useAppState;

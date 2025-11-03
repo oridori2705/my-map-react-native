@@ -7,7 +7,7 @@ import useForm from '@/hooks/useForm';
 import {validateLogin} from '../../utils/validation';
 import useAuth from '../../hooks/queries/useAuth';
 
-function LoginScreen() {
+const LoginScreen = () => {
   const login = useForm({
     initialValue: {email: '', password: ''},
     validate: validateLogin,
@@ -59,7 +59,7 @@ function LoginScreen() {
       />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -14,7 +14,7 @@ interface MapIconButtonProps {
   onPress: () => void;
 }
 
-function MapIconButton({name, onPress}: MapIconButtonProps) {
+const MapIconButton = ({name, onPress}: MapIconButtonProps) => {
   return (
     <Pressable style={styles.mapButton} onPress={onPress}>
       <FontAwesome6
@@ -25,7 +25,7 @@ function MapIconButton({name, onPress}: MapIconButtonProps) {
       />
     </Pressable>
   );
-}
+};
 
 const styles = StyleSheet.create({
   mapButton: {
