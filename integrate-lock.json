@@ -114,8 +114,8 @@
       "integrated": false
     },
     "react-native-config": {
-      "version": "^1.5.9",
-      "integrated": false
+      "version": "^1.5.5",
+      "integrated": true
     },
     "react-native-encrypted-storage": {
       "version": "^4.0.3",
