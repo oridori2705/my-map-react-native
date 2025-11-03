@@ -2,27 +2,32 @@ import {colors} from '@/constant/colors';
 import React, {Ref} from 'react';
 import {StyleSheet, Text, TextInput, TextInputProps, View} from 'react-native';
 
-interface CustomInputProps extends TextInputProps {
+interface InputFieldProps extends TextInputProps {
   ref?: Ref<TextInput>;
   error?: string;
   touched?: boolean;
 }
 
-const CustomInput = ({ref, error, touched, ...props}: CustomInputProps) => {
+function InputField({ref, error, touched, ...props}: InputFieldProps) {
   return (
     <View>
       <TextInput
         ref={ref}
+        placeholderTextColor={colors.GRAY_500}
+        autoCapitalize="none"
         spellCheck={false}
         autoCorrect={false}
-        autoCapitalize="none"
-        style={[styles.input, Boolean(error) && styles.inputError]}
+        style={[
+          styles.input,
+          props.multiline && styles.multiLine,
+          touched && Boolean(error) && styles.inputError,
+        ]}
         {...props}
       />
       {touched && Boolean(error) && <Text style={styles.error}>{error}</Text>}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   input: {
@@ -33,6 +38,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 16,
     color: colors.BLACK,
+  },
+  multiLine: {
+    height: 150,
+    paddingVertical: 10,
+    textAlignVertical: 'top',
   },
   inputError: {
     borderWidth: 1,
@@ -45,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomInput;
+export default InputField;

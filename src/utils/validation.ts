@@ -3,7 +3,7 @@ type UserInformation = {
   password: string;
 };
 
-function validateUser(values: UserInformation) {
+export const validateUser = (values: UserInformation) => {
   const errors = {
     email: '',
     password: '',
@@ -17,13 +17,15 @@ function validateUser(values: UserInformation) {
   }
 
   return errors;
-}
+};
 
-function validateLogin(values: UserInformation) {
+export const validateLogin = (values: UserInformation) => {
   return validateUser(values);
-}
+};
 
-function validateSignup(values: UserInformation & {passwordConfirm: string}) {
+export const validateSignup = (
+  values: UserInformation & {passwordConfirm: string},
+) => {
   const errors = validateUser(values);
   const signupErrors = {...errors, passwordConfirm: ''};
 
@@ -32,6 +34,17 @@ function validateSignup(values: UserInformation & {passwordConfirm: string}) {
   }
 
   return signupErrors;
-}
+};
 
-export {validateLogin, validateSignup};
+export const validateAddPost = (values: {title: string}) => {
+  const errors = {
+    title: '',
+    description: '',
+  };
+
+  if (values.title.trim() === '') {
+    errors.title = '제목은 1~30자 이내로 입력해주세요.';
+  }
+
+  return errors;
+};
