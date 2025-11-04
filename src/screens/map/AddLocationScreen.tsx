@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 
 import {MapStackParamList} from '@/types/navigation';
@@ -13,8 +13,12 @@ import {getDateWithSeparator} from '@/utils/date';
 import MarkerColorInput from '@/component/MarkerColorInput';
 import {colors} from '@/constant/colors';
 import FixedBottomCTA from '@/component/FixedBottomCTA';
-import StarRating from '../../component/StarRating';
+import StarRating from '@/component/StarRating';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import usePermission from '@/hooks/usePermission';
+import ImageInput from '@/component/ImageInput';
+import useImagePicker from '../../hooks/useImagePicker';
+import PreviewImageList from '../../component/PreviewImageList';
 
 type Props = StackScreenProps<MapStackParamList, 'AddLocation'>;
 
@@ -34,6 +38,10 @@ const AddLocationScreen = ({route}: Props) => {
   });
 
   const [openDate, setOpenDate] = useState(false);
+
+  const imagePicker = useImagePicker();
+
+  usePermission('PHOTO');
 
   const handleSubmit = () => {
     console.log('postForm.values', postForm.values);
@@ -88,6 +96,13 @@ const AddLocationScreen = ({route}: Props) => {
           }}
           onCancel={() => setOpenDate(false)}
         />
+        <View style={{flexDirection: 'row'}}>
+          <ImageInput onChange={imagePicker.handleChangeImage} />
+          <PreviewImageList
+            imageUris={imagePicker.imageUris}
+            onDelete={imagePicker.delete}
+          />
+        </View>
       </ScrollView>
       <FixedBottomCTA label="저장" onPress={handleSubmit} />
     </>
