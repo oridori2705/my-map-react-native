@@ -4,10 +4,11 @@ import CalendarScreen from '@/screens/calendar/CalendarScreen';
 import {colors} from '@/constant/colors';
 import {FeedStack} from './FeedNavigation';
 import {MapStack} from './MapNavigation';
-import DrawerButton from '@/component/DrawerButton';
-import CustomDrawerContent from '@/component/CustomDrawerContent';
+
 import {MainDrawerParamList} from '@/types/navigation';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+import DrawerButton from '@/component/common/DrawerButton';
+import CustomDrawerContent from '@/component/common/CustomDrawerContent';
 
 type DrawerIconName = 'map' | 'book' | 'calendar';
 

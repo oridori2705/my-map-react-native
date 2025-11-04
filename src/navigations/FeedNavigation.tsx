@@ -4,7 +4,7 @@ import FeedDetailScreen from '@/screens/feed/FeedDetailScreen';
 import FeedFavoriteScreen from '@/screens/feed/FeedFavoriteScreen';
 import EditLocationScreen from '@/screens/feed/EditLocationScreen';
 import {colors} from '@/constant/colors';
-import DrawerButton from '@/component/DrawerButton';
+import DrawerButton from '@/component/common/DrawerButton';
 
 export const FeedStack = createStackNavigator({
   screenOptions: {
