@@ -17,8 +17,10 @@ import StarRating from '@/component/StarRating';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import usePermission from '@/hooks/usePermission';
 import ImageInput from '@/component/ImageInput';
-import useImagePicker from '../../hooks/useImagePicker';
-import PreviewImageList from '../../component/PreviewImageList';
+import useImagePicker from '@/hooks/useImagePicker';
+import PreviewImageList from '@/component/PreviewImageList';
+import {useNavigation} from '@react-navigation/native';
+import useMutateCreatePost from '@/hooks/queries/useMutateCreatePost';
 
 type Props = StackScreenProps<MapStackParamList, 'AddLocation'>;
 
@@ -41,10 +43,24 @@ const AddLocationScreen = ({route}: Props) => {
 
   const imagePicker = useImagePicker();
 
+  const navigation = useNavigation();
+
+  const createPost = useMutateCreatePost();
+
   usePermission('PHOTO');
 
   const handleSubmit = () => {
-    console.log('postForm.values', postForm.values);
+    createPost.mutate(
+      {
+        address,
+        ...location,
+        ...postForm.values,
+        imageUris: imagePicker.imageUris,
+      },
+      {
+        onSuccess: () => navigation.goBack(),
+      },
+    );
   };
 
   return (
