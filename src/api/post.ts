@@ -6,3 +6,9 @@ export const createPost = async (body: Omit<Post, 'id'>): Promise<Post> => {
 
   return data;
 };
+
+export const getPost = async (id: number): Promise<Post> => {
+  const {data} = await axiosInstance.get(`/posts/${id}`);
+
+  return data;
+};

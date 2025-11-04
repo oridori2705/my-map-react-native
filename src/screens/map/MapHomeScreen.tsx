@@ -5,17 +5,19 @@ import MapView, {LatLng, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import DrawerButton from '@/component/DrawerButton';
 import {colors} from '@/constant/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {numbers} from '../../constant/number';
-import useUserLocation from '../../hooks/useUserLocation';
+import {numbers} from '@/constant/number';
+import useUserLocation from '@/hooks/useUserLocation';
 import Toast from 'react-native-toast-message';
-import useMoveMapView from '../../hooks/useMoveMapView';
-import usePermission from '../../hooks/usePermission';
-import CustomMarker from '../../component/CustomMarker';
-import MapIconButton from '../../component/MapIconButton';
+import useMoveMapView from '@/hooks/useMoveMapView';
+import usePermission from '@/hooks/usePermission';
+import CustomMarker from '@/component/CustomMarker';
+import MapIconButton from '@/component/MapIconButton';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {MapStackParamList} from '../../types/navigation';
-import useGetMarkers from '../../hooks/queries/useGetMarkers';
+import {MapStackParamList} from '@/types/navigation';
+import useGetMarkers from '@/hooks/queries/useGetMarkers';
+import useModal from '@/hooks/useModal';
+import MarkerModal from '@/component/MarkerModal';
 
 type Navigation = StackNavigationProp<MapStackParamList>;
 
@@ -23,12 +25,25 @@ const MapHomeScreen = () => {
   const navigation = useNavigation<Navigation>();
   //노치 부분의 길이를 구하여서 그 길이만큼 맵을 밀어내기 위해 사용
   const inset = useSafeAreaInsets();
+
+  //선택한 위치 상태
   const [selectLocation, setSelectLocation] = useState<LatLng | null>();
+
+  //사용자 위치 가져오기
   const {userLocation, isUserLocationError} = useUserLocation();
+
+  //지도 이동 훅
   const {mapRef, moveMapView, handleChangeDelta} = useMoveMapView();
 
+  //마커 데이터 불러오기
   const {data: markers = []} = useGetMarkers();
 
+  const markerModal = useModal();
+
+  //선택한 마커 ID 상태
+  const [markerId, setSetMarkerId] = useState<number>();
+
+  //위치 권한 요청
   usePermission('LOCATION');
 
   const handlePressUserLocation = () => {
@@ -44,8 +59,11 @@ const MapHomeScreen = () => {
     moveMapView(userLocation);
   };
 
-  const handlePressMarker = (coordinate: LatLng) => {
+  const handlePressMarker = (id: number, coordinate: LatLng) => {
+    setSetMarkerId(id);
     moveMapView(coordinate);
+    moveMapView(coordinate);
+    markerModal.show();
   };
 
   const handlePressAddPost = () => {
@@ -89,7 +107,7 @@ const MapHomeScreen = () => {
             color={color}
             score={score}
             coordinate={coordinate}
-            onPress={() => handlePressMarker(coordinate)}
+            onPress={() => handlePressMarker(id, coordinate)}
           />
         ))}
         {selectLocation && <Marker coordinate={selectLocation} />}
@@ -101,6 +119,11 @@ const MapHomeScreen = () => {
           onPress={handlePressUserLocation}
         />
       </View>
+      <MarkerModal
+        isVisible={markerModal.isVisible}
+        markerId={Number(markerId)}
+        hide={markerModal.hide}
+      />
     </>
   );
 };
