@@ -7,34 +7,37 @@ type RequsetUser = {
   password: string;
 };
 
-async function postSignup({email, password}: RequsetUser): Promise<void> {
+export const postSignup = async ({
+  email,
+  password,
+}: RequsetUser): Promise<void> => {
   await axiosInstance.post('/auth/signup', {email, password});
-}
+};
 
 type ResponseToken = {
   accessToken: string;
   refreshToken: string;
 };
 
-async function postLogin({
+export const postLogin = async ({
   email,
   password,
-}: RequsetUser): Promise<ResponseToken> {
+}: RequsetUser): Promise<ResponseToken> => {
   const {data} = await axiosInstance.post('/auth/signin', {
     email,
     password,
   });
 
   return data;
-}
+};
 
-async function getProfile(): Promise<Profile> {
+export const getProfile = async (): Promise<Profile> => {
   const {data} = await axiosInstance.get('/auth/me');
 
   return data;
-}
+};
 
-async function getAccessToken(): Promise<ResponseToken> {
+export const getAccessToken = async (): Promise<ResponseToken> => {
   const refreshToken = await getEncryptStorage('refreshToken');
 
   const {data} = await axiosInstance.get('/auth/refresh', {
@@ -44,10 +47,8 @@ async function getAccessToken(): Promise<ResponseToken> {
   });
 
   return data;
-}
+};
 
-async function logout() {
+export const logout = async () => {
   await axiosInstance.post('/auth/logout');
-}
-
-export {postSignup, postLogin, getProfile, getAccessToken, logout};
+};
