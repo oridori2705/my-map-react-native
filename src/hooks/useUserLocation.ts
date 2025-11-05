@@ -11,14 +11,14 @@ const useUserLocation = () => {
   const [isUserLocationError, setIsUserLocationError] = useState(false);
   const {isComeback} = useAppState();
 
-  useEffect(() => {
-    if (!isComeback) {
-      return;
-    }
-
+  // 위치 가져오는 로직을 함수로 분리
+  const fetchUserLocation = () => {
     Geolocation.getCurrentPosition(
       info => {
-        setUserLocation(info.coords);
+        setUserLocation({
+          latitude: info.coords.latitude,
+          longitude: info.coords.longitude,
+        });
         setIsUserLocationError(false);
       },
       () => {
@@ -26,8 +26,22 @@ const useUserLocation = () => {
       },
       {
         enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 0,
       },
     );
+  };
+
+  // 최초 마운트 시 위치 가져오기
+  useEffect(() => {
+    fetchUserLocation();
+  }, []); // 빈 배열로 최초 1회만 실행
+
+  // 앱이 백그라운드에서 돌아올 때 위치 업데이트
+  useEffect(() => {
+    if (isComeback) {
+      fetchUserLocation();
+    }
   }, [isComeback]);
 
   return {userLocation, isUserLocationError};
