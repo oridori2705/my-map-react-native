@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import {useCallback, useState} from 'react';
+import {ActivityIndicator, Alert, StyleSheet, View} from 'react-native';
 
 import MapView, {LatLng, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import DrawerButton from '@/component/common/DrawerButton';
@@ -12,7 +12,7 @@ import useMoveMapView from '@/hooks/useMoveMapView';
 import usePermission from '@/hooks/usePermission';
 import CustomMarker from '@/component/common/CustomMarker';
 import MapIconButton from '@/component/map/MapIconButton';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {MapStackParamList} from '@/types/navigation';
 import useGetMarkers from '@/hooks/queries/useGetMarkers';
@@ -30,7 +30,7 @@ const MapHomeScreen = () => {
   const [selectLocation, setSelectLocation] = useState<LatLng | null>();
 
   //사용자 위치 가져오기
-  const {userLocation, isUserLocationError} = useUserLocation();
+  const {userLocation, isUserLocationError, isLoading} = useUserLocation();
 
   //지도 이동 훅
   const {mapRef, moveMapView, handleChangeDelta} = useMoveMapView();
@@ -39,9 +39,11 @@ const MapHomeScreen = () => {
   const {data: markers = []} = useGetMarkers();
 
   const markerModal = useModal();
-  console.log(markers);
+
   //선택한 마커 ID 상태
   const [markerId, setSetMarkerId] = useState<number>();
+
+  const isFocused = useIsFocused();
 
   //위치 권한 요청
   usePermission('LOCATION');
@@ -55,13 +57,10 @@ const MapHomeScreen = () => {
       });
       return;
     }
-
     moveMapView(userLocation);
   };
-
   const handlePressMarker = (id: number, coordinate: LatLng) => {
     setSetMarkerId(id);
-    moveMapView(coordinate);
     moveMapView(coordinate);
     markerModal.show();
   };
@@ -74,13 +73,19 @@ const MapHomeScreen = () => {
       );
       return;
     }
-
-    //선택한 위치를 함께 전달
     navigation.navigate('AddLocation', {
       location: selectLocation,
     });
     setSelectLocation(null);
   };
+
+  if (!isFocused || isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={colors.PINK_700} />
+      </View>
+    );
+  }
 
   return (
     <>
@@ -110,6 +115,7 @@ const MapHomeScreen = () => {
             onPress={() => handlePressMarker(id, coordinate)}
           />
         ))}
+
         {selectLocation && <Marker coordinate={selectLocation} />}
       </MapView>
       <View style={styles.buttonList}>
@@ -131,6 +137,12 @@ const MapHomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.WHITE,
   },
   drawerButton: {
     position: 'absolute',

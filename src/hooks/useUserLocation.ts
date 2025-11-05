@@ -10,9 +10,12 @@ const useUserLocation = () => {
   });
   const [isUserLocationError, setIsUserLocationError] = useState(false);
   const {isComeback} = useAppState();
+  const [isLoadingLocation, setIsLoadingLocation] = useState(true); // ✅ 추가
 
   // 위치 가져오는 로직을 함수로 분리
   const fetchUserLocation = () => {
+    setIsLoadingLocation(true); // ✅ 요청 시작 시 true
+
     Geolocation.getCurrentPosition(
       info => {
         setUserLocation({
@@ -20,9 +23,11 @@ const useUserLocation = () => {
           longitude: info.coords.longitude,
         });
         setIsUserLocationError(false);
+        setIsLoadingLocation(false); // ✅ 성공 시 false
       },
       () => {
         setIsUserLocationError(true);
+        setIsLoadingLocation(false); // ✅ 실패 시도 false
       },
       {
         enableHighAccuracy: true,
@@ -44,7 +49,7 @@ const useUserLocation = () => {
     }
   }, [isComeback]);
 
-  return {userLocation, isUserLocationError};
+  return {userLocation, isUserLocationError, isLoading: isLoadingLocation};
 };
 
 export default useUserLocation;
