@@ -39,7 +39,7 @@ const MapHomeScreen = () => {
   const {data: markers = []} = useGetMarkers();
 
   const markerModal = useModal();
-
+  console.log(markers);
   //선택한 마커 ID 상태
   const [markerId, setSetMarkerId] = useState<number>();
 

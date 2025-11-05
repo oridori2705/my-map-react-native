@@ -1,7 +1,7 @@
 import {SafeAreaView, StyleSheet, TextInput, View} from 'react-native';
 
-import CustomButton from '@/component/CustomButton';
-import CustomInput from '@/component/CustomInput';
+import CustomButton from '@/component/common/CustomButton';
+import CustomInput from '@/component/common/CustomInput';
 import useForm from '@/hooks/useForm';
 
 import {useRef} from 'react';

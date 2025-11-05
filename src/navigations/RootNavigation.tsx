@@ -5,7 +5,7 @@ import DrawerNavigation from './DrawerNavigation';
 const RootNavigation = () => {
   const {isLogin} = useAuth();
 
-  return <>{true ? <DrawerNavigation /> : <AuthNavigation />}</>;
+  return <>{isLogin ? <DrawerNavigation /> : <AuthNavigation />}</>;
 };
 
 export default RootNavigation;

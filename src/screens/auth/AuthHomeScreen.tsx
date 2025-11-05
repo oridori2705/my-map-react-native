@@ -3,7 +3,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {AuthStackParamList} from '@/types/navigation';
-import CustomButton from '@/component/CustomButton';
+import CustomButton from '@/component/common/CustomButton';
 import {colors} from '@/constant/colors';
 
 type Navigation = StackNavigationProp<AuthStackParamList>;

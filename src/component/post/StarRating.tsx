@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import {colors} from '../constant/colors';
+import {colors} from '@/constant/colors';
 import {Text} from 'react-native-gesture-handler';
 
 interface StarRatingProps {

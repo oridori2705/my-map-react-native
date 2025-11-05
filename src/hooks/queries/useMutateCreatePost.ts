@@ -12,22 +12,27 @@ const useMutateCreatePost = (mutationOptions?: UseMutationCustomOptions) => {
     onSuccess: newPost => {
       queryClient.invalidateQueries({
         queryKey: [queryKeys.POST, queryKeys.GET_POSTS],
-      }),
-        queryClient.setQueryData<Marker[]>(
-          [queryKeys.MARKER, queryKeys.GET_MARKERS],
-          existingMarkers => {
-            const newMarker = {
-              id: newPost.id,
-              latitude: newPost.latitude,
-              longitude: newPost.longitude,
-              color: newPost.color,
-              score: newPost.score,
-            };
-            return existingMarkers
-              ? [...existingMarkers, newMarker]
-              : [newMarker];
-          },
-        );
+      });
+      console.log('Post created successfully:', newPost);
+
+      queryClient.setQueryData<Marker[]>(
+        [queryKeys.MARKER, queryKeys.GET_MARKERS],
+        existingMarkers => {
+          const newMarker = {
+            id: newPost.id,
+            latitude: newPost.latitude,
+            longitude: newPost.longitude,
+            color: newPost.color,
+            score: newPost.score,
+          };
+          console.log(
+            existingMarkers ? [...existingMarkers, newMarker] : [newMarker],
+          );
+          return existingMarkers
+            ? [...existingMarkers, newMarker]
+            : [newMarker];
+        },
+      );
     },
     ...mutationOptions,
   });

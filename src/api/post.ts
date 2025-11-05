@@ -3,7 +3,7 @@ import axiosInstance from './axios';
 
 export const createPost = async (body: Omit<Post, 'id'>): Promise<Post> => {
   const {data} = await axiosInstance.post('/posts', body);
-
+  console.log(data);
   return data;
 };
 
