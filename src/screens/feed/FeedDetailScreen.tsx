@@ -20,6 +20,8 @@ import CustomButton from '@/component/common/CustomButton';
 import useGetPost from '@/hooks/queries/useGetPost';
 import {useNavigation} from '@react-navigation/native';
 import useLocationStore from '@/store/location';
+import FeedDetailActionSheet from '../../component/feed/FeedDetailActionSheet';
+import useModal from '../../hooks/useModal';
 
 type Props = StackScreenProps<FeedStackParamList, 'FeedDetail'>;
 
@@ -31,6 +33,8 @@ const FeedDetailScreen = ({route}: Props) => {
   const navigation = useNavigation();
 
   const {setMoveLocation} = useLocationStore();
+
+  const detailAction = useModal();
 
   if (isPending || isError) {
     return <></>;
@@ -54,7 +58,12 @@ const FeedDetailScreen = ({route}: Props) => {
           color={colors.WHITE}
           onPress={() => navigation.goBack()}
         />
-        <Ionicons name="ellipsis-vertical" size={30} color={colors.WHITE} />
+        <Ionicons
+          name="ellipsis-vertical"
+          size={30}
+          color={colors.WHITE}
+          onPress={detailAction.show}
+        />
       </View>
       <ScrollView>
         <View style={styles.imageContainer}>
@@ -132,6 +141,10 @@ const FeedDetailScreen = ({route}: Props) => {
           onPress={handlePressLocation}
         />
       </View>
+      <FeedDetailActionSheet
+        isVisible={detailAction.isVisible}
+        hideAction={detailAction.hide}
+      />
     </>
   );
 };
