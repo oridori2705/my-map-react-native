@@ -91,6 +91,7 @@ const AddLocationScreen = ({route}: Props) => {
         />
         <MarkerColorInput
           color={postForm.values.color}
+          score={postForm.values.score}
           onChangeColor={value => postForm.onChange('color', value)}
         />
         <StarRating
