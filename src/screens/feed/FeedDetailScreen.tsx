@@ -20,8 +20,9 @@ import CustomButton from '@/component/common/CustomButton';
 import useGetPost from '@/hooks/queries/useGetPost';
 import {useNavigation} from '@react-navigation/native';
 import useLocationStore from '@/store/location';
-import FeedDetailActionSheet from '../../component/feed/FeedDetailActionSheet';
-import useModal from '../../hooks/useModal';
+import FeedDetailActionSheet from '@/component/feed/FeedDetailActionSheet';
+import useModal from '@/hooks/useModal';
+import useMutateFavoritePost from '@/hooks/queries/useMutateFavoritePost';
 
 type Props = StackScreenProps<FeedStackParamList, 'FeedDetail'>;
 
@@ -35,6 +36,8 @@ const FeedDetailScreen = ({route}: Props) => {
   const {setMoveLocation} = useLocationStore();
 
   const detailAction = useModal();
+
+  const favoriteMutation = useMutateFavoritePost();
 
   if (isPending || isError) {
     return <></>;
@@ -131,8 +134,15 @@ const FeedDetailScreen = ({route}: Props) => {
       <View style={[styles.bottomContainer, {paddingBottom: insets.bottom}]}>
         <CustomButton
           size="small"
-          label={<Ionicons name="star" size={25} color={colors.WHITE} />}
+          label={
+            <Ionicons
+              name="star"
+              size={25}
+              color={post.isFavorite ? colors.YELLOW_500 : colors.WHITE}
+            />
+          }
           style={{paddingHorizontal: 5}}
+          onPress={() => favoriteMutation.mutate(post.id)}
         />
         <CustomButton
           size="small"
