@@ -36,7 +36,7 @@ const MarkerModal = ({markerId, isVisible, hide}: MarkerModalProps) => {
       params: {
         id: post.id,
       },
-      initial: false,
+      initial: false, //지정된 화면을 초기화면으로 사용하는 동작을 비활성화
     });
 
     hide();
