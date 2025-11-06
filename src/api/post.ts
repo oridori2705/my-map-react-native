@@ -24,3 +24,17 @@ export const deletePost = async (id: number) => {
 
   return data;
 };
+
+type RequestUpdatePost = {
+  id: number;
+  body: Omit<Post, 'id' | 'longitude' | 'latitude' | 'address'>;
+};
+
+export const updatePost = async ({
+  id,
+  body,
+}: RequestUpdatePost): Promise<Post> => {
+  const {data} = await axiosInstance.patch(`/posts/${id}`, body);
+
+  return data;
+};

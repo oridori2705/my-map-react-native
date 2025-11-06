@@ -6,10 +6,15 @@ import CustomMarker from '@/component/common/CustomMarker';
 
 interface MarkerColorInputProps {
   color: string;
+  score: number;
   onChangeColor: (value: string) => void;
 }
 
-const MarkerColorInput = ({color, onChangeColor}: MarkerColorInputProps) => {
+const MarkerColorInput = ({
+  color,
+  score,
+  onChangeColor,
+}: MarkerColorInputProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.markerLabel}>마커선택</Text>
@@ -30,7 +35,7 @@ const MarkerColorInput = ({color, onChangeColor}: MarkerColorInputProps) => {
                   color === selectColor && styles.pressedMarker,
                 ]}
                 onPress={() => onChangeColor(selectColor)}>
-                <CustomMarker color={selectColor} />
+                <CustomMarker color={selectColor} score={score} />
               </Pressable>
             );
           })}

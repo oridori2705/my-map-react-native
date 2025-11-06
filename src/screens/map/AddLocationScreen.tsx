@@ -41,7 +41,7 @@ const AddLocationScreen = ({route}: Props) => {
 
   const [openDate, setOpenDate] = useState(false);
 
-  const imagePicker = useImagePicker();
+  const imagePicker = useImagePicker({initialImages: []});
 
   const navigation = useNavigation();
 

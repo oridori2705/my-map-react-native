@@ -41,6 +41,9 @@ export const FeedStack = createStackNavigator({
     },
     EditLocation: {
       screen: EditLocationScreen,
+      options: {
+        title: '장소 수정',
+      },
     },
   },
 });
