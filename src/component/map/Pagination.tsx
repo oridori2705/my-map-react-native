@@ -9,7 +9,7 @@ interface PaginationProps {
   fetchNextPage: () => void;
   goToPage: (page: number) => void;
   totalLength: number;
-  itemsPerPage: number;
+  itemsPerPage?: number;
   pagesToShow?: number; // 표시할 페이지 번호 개수 (기본값: 5)
 }
 
