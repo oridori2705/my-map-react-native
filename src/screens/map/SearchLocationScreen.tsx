@@ -11,7 +11,7 @@ const SearchLocationScreen = () => {
   const {userLocation} = useUserLocation();
   const [pageParam, setPageParam] = useState(1);
 
-  const {regionInfo, isLoading, hasNextPage, searchLocation} =
+  const {regionInfo, isLoading, totalLength, searchLocation} =
     useSearchLocation();
 
   const fetchNextPage = () => {
@@ -51,8 +51,7 @@ const SearchLocationScreen = () => {
         pageParam={pageParam}
         fetchNextPage={fetchNextPage}
         fetchPrevPage={fetchPrevPage}
-        hasNextPage={hasNextPage}
-        totalLength={regionInfo.length}
+        totalLength={totalLength}
       />
     </View>
   );

@@ -19,7 +19,7 @@ interface SearchRegionResultProps {
   regionInfo: RegionInfo[];
 }
 
-function SearchRegionResult({regionInfo}: SearchRegionResultProps) {
+const SearchRegionResult = ({regionInfo}: SearchRegionResultProps) => {
   const navigation = useNavigation();
   const {setMoveLocation, setSelectLocation} = useLocationStore();
 
@@ -77,7 +77,7 @@ function SearchRegionResult({regionInfo}: SearchRegionResultProps) {
       </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

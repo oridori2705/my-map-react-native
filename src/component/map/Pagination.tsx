@@ -9,18 +9,21 @@ interface PaginationProps {
   fetchNextPage: () => void;
   goToPage: (page: number) => void;
   totalLength: number;
+  itemsPerPage: number;
   pagesToShow?: number; // 표시할 페이지 번호 개수 (기본값: 5)
 }
 
-function Pagination({
+const Pagination = ({
   pageParam,
   fetchNextPage,
   fetchPrevPage,
   goToPage,
   totalLength,
+  itemsPerPage = 15,
   pagesToShow = 5,
-}: PaginationProps) {
-  const totalPages = Math.ceil(totalLength / pagesToShow);
+}: PaginationProps) => {
+  console.log(totalLength);
+  const totalPages = Math.ceil(totalLength / itemsPerPage);
   const halfPagesToShow = Math.floor(pagesToShow / 2);
 
   const calculateStartPage = () => {
@@ -43,7 +46,7 @@ function Pagination({
     {length: endPage - startPage + 1},
     (_, i) => startPage + i,
   );
-
+  console.log(pages);
   return (
     <View style={styles.container}>
       {/* 이전 페이지 버튼 */}
@@ -105,7 +108,7 @@ function Pagination({
       </Pressable>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
