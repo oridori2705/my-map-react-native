@@ -29,7 +29,6 @@ const useMoveMapView = () => {
   useEffect(() => {
     if (moveLocation) {
       moveMapView(moveLocation);
-      setMoveLocation(null);
     }
   }, [moveLocation, moveMapView, setMoveLocation]);
 
