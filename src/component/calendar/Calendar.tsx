@@ -29,6 +29,7 @@ const Calendar = ({
   const yearSelector = useModal();
 
   const handleChangeYear = (selectYear: number) => {
+    //월을 바꾸는 함수에 12를 곱한 값을 넘겨서 연도 변경
     onChangeMonth((selectYear - year) * 12);
     yearSelector.hide();
   };

@@ -5,11 +5,12 @@ import {colors} from '@/constant/colors';
 interface ScheduleProps {
   subTitle: string;
   title: string;
+  onPress: () => void;
 }
 
-const Schedule = ({subTitle, title}: ScheduleProps) => {
+const Schedule = ({subTitle, title, onPress}: ScheduleProps) => {
   return (
-    <Pressable style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
       <View style={styles.line} />
       <View style={styles.infoContainer}>
         <Text
