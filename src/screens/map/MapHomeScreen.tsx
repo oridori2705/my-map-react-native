@@ -119,6 +119,10 @@ const MapHomeScreen = () => {
         {selectLocation && <Marker coordinate={selectLocation} />}
       </MapView>
       <View style={styles.buttonList}>
+        <MapIconButton
+          name="magnifying-glass"
+          onPress={() => navigation.navigate('SearchLocation')}
+        />
         <MapIconButton name="plus" onPress={handlePressAddPost} />
         <MapIconButton
           name="location-crosshairs"
