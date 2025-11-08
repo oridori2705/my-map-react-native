@@ -18,6 +18,7 @@ import {MapStackParamList} from '@/types/navigation';
 import useGetMarkers from '@/hooks/queries/useGetMarkers';
 import useModal from '@/hooks/useModal';
 import MarkerModal from '@/component/map/MarkerModal';
+import useLocationStore from '../../store/location';
 
 type Navigation = StackNavigationProp<MapStackParamList>;
 
@@ -27,7 +28,7 @@ const MapHomeScreen = () => {
   const inset = useSafeAreaInsets();
 
   //선택한 위치 상태
-  const [selectLocation, setSelectLocation] = useState<LatLng | null>();
+  const {selectLocation, setSelectLocation} = useLocationStore();
 
   //사용자 위치 가져오기
   const {userLocation, isUserLocationError, isLoading} = useUserLocation();

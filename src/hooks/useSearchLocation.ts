@@ -5,7 +5,7 @@ import {LatLng} from 'react-native-maps';
 
 type Meta = {
   total_count: number;
-  pageble_count: number;
+  pageable_count: number;
   is_end: boolean;
   same_name: {
     region: string[];
@@ -38,9 +38,10 @@ const useSearchLocation = () => {
   const [regionInfo, setRegionInfo] = useState<RegionInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [totalLength, setTotalLength] = useState(0);
 
   const searchLocation = useCallback(
-    async (keyword: string, location: LatLng) => {
+    async (keyword: string, location: LatLng, page = 1) => {
       // 빈 키워드는 검색하지 않음
       if (!keyword.trim()) {
         setRegionInfo([]);
@@ -52,13 +53,14 @@ const useSearchLocation = () => {
 
       try {
         const {data} = await axios.get<RegionResponse>(
-          `https://dapi.kakao.com/v2/local/search/keyword.json?query=${keyword}&y=${location.latitude}&x=${location.longitude}`,
+          `https://dapi.kakao.com/v2/local/search/keyword.json?query=${keyword}&y=${location.latitude}&x=${location.longitude}&page=${page}`,
           {
             headers: {
               Authorization: `KakaoAK ${Config.KAKAO_REST_API_KEY}`,
             },
           },
         );
+        setTotalLength(data.meta.pageable_count);
         setRegionInfo(data.documents);
       } catch (err) {
         setRegionInfo([]);
@@ -70,7 +72,13 @@ const useSearchLocation = () => {
     [],
   );
 
-  return {regionInfo, isLoading, error, searchLocation};
+  return {
+    regionInfo,
+    isLoading,
+    error,
+    searchLocation,
+    totalLength,
+  };
 };
 
 export default useSearchLocation;
