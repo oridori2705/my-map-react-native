@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StyleSheet} from 'react-native';
 import FeedList from '@/component/feed/FeedList';
+import Indicator from '@/component/common/Indicator';
 
 const FeedListScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <FeedList />
+      <Suspense fallback={<Indicator size={'large'} />}>
+        <FeedList />
+      </Suspense>
     </SafeAreaView>
   );
 };

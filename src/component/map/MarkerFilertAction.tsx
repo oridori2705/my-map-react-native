@@ -24,11 +24,7 @@ function MarkerFilterAction({isVisible, hideAction}: MarkerFilterActionProps) {
       animationType="fade">
       <ActionSheet.Container>
         <ActionSheet.Title>마커 필터링</ActionSheet.Title>
-        <ActionSheet.Button onPress={resetFilters}>
-          <View>
-            <Text style={styles.resetButton}>초기화</Text>
-          </View>
-        </ActionSheet.Button>
+
         <ActionSheet.Divider />
         <View style={styles.filterContainer}>
           {['색상', '평점'].map(condition => (
@@ -73,6 +69,12 @@ function MarkerFilterAction({isVisible, hideAction}: MarkerFilterActionProps) {
             ))}
           </>
         )}
+        <ActionSheet.Divider />
+        <ActionSheet.Button onPress={resetFilters}>
+          <View>
+            <Text style={styles.resetButton}>초기화</Text>
+          </View>
+        </ActionSheet.Button>
         <ActionSheet.Divider />
         <ActionSheet.Button onPress={hideAction}>완료</ActionSheet.Button>
       </ActionSheet.Container>
