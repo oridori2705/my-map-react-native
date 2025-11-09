@@ -6,6 +6,7 @@ import {
 import React from 'react';
 import {
   Image,
+  Platform,
   Pressable,
   SafeAreaView,
   StyleSheet,
@@ -15,8 +16,11 @@ import {
 import {colors} from '@/constant/colors';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {useNavigation} from '@react-navigation/native';
+import useAuth from '@/hooks/queries/useAuth';
+import {baseUrls} from '@/api/axios';
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
+  const {auth} = useAuth();
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
@@ -27,7 +31,15 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         <Pressable style={styles.profileContainer}>
           <View style={styles.userImageContainer}>
             <Image
-              source={require('@/assets/default-user.png')}
+              source={
+                auth.imageUri
+                  ? {
+                      uri: `${
+                        Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
+                      }/${auth.imageUri}`,
+                    }
+                  : require('@/assets/default-user.png')
+              }
               style={styles.userImage}
             />
           </View>

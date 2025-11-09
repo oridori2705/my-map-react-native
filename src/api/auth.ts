@@ -52,3 +52,11 @@ export const getAccessToken = async (): Promise<ResponseToken> => {
 export const logout = async () => {
   await axiosInstance.post('/auth/logout');
 };
+
+type RequestProfile = Pick<Profile, 'nickname' | 'imageUri'>;
+
+export const editProfile = async (body: RequestProfile): Promise<Profile> => {
+  const {data} = await axiosInstance.patch('/auth/me', body);
+
+  return data;
+};

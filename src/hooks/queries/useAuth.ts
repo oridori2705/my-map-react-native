@@ -4,6 +4,7 @@ import {removeEncryptStorage, setEncryptStorage} from '@/utils/encryptStorage';
 import {useEffect} from 'react';
 import {Profile} from '@/types/domain';
 import {
+  editProfile,
   getAccessToken,
   getProfile,
   logout,
@@ -136,6 +137,21 @@ const useLogout = (mutationOptions?: UseMutationCustomOptions) => {
   });
 };
 
+//프로필 수정
+
+const useUpdateProfile = (mutationOptions?: UseMutationCustomOptions) => {
+  return useMutation({
+    mutationFn: editProfile,
+    onSuccess: newProfile => {
+      queryClient.setQueryData(
+        [queryKeys.AUTH, queryKeys.GET_PROFILE],
+        newProfile,
+      );
+    },
+    ...mutationOptions,
+  });
+};
+
 const useAuth = () => {
   const signupMutation = useSignup();
   const loginMutation = useLogin();
@@ -144,6 +160,7 @@ const useAuth = () => {
     enabled: refreshTokenQuery.isSuccess,
   });
   const logoutMutation = useLogout();
+  const profileMutation = useUpdateProfile();
 
   return {
     auth: {
@@ -156,6 +173,7 @@ const useAuth = () => {
     loginMutation,
     isLogin,
     logoutMutation,
+    profileMutation,
   };
 };
 
