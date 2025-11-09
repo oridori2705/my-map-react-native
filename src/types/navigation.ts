@@ -21,10 +21,16 @@ export type FeedStackParamList = {
   EditLocation: {id: number};
 };
 
+export type SettingStackParamList = {
+  SettingHome: undefined;
+  EditProfile: undefined;
+};
+
 export type MainDrawerParamList = {
   Map: NavigatorScreenParams<MapStackParamList>;
   Feed: NavigatorScreenParams<FeedStackParamList>;
   Calendar: undefined;
+  Setting: undefined;
 };
 
 declare global {
