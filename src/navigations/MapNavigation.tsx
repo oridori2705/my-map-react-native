@@ -3,39 +3,56 @@ import MapHomeScreen from '@/screens/map/MapHomeScreen';
 import AddLocationScreen from '@/screens/map/AddLocationScreen';
 import SearchLocationScreen from '@/screens/map/SearchLocationScreen';
 import {colors} from '@/constant/colors';
+import {MapStackParamList} from '../types/navigation';
+import useThemeStore from '../store/theme';
 
-export const MapStack = createStackNavigator({
-  screenOptions: {
-    headerTitleAlign: 'center',
-    headerBackButtonDisplayMode: 'minimal',
-    headerTintColor: colors.BLACK,
-    headerStyle: {
-      backgroundColor: colors.WHITE,
-      shadowColor: colors.GRAY_500,
-    },
-    headerTitleStyle: {
-      fontSize: 16,
-    },
-  },
-  screens: {
-    MapHome: {
-      screen: MapHomeScreen,
-      options: {
-        headerShown: false,
-      },
-    },
-    AddLocation: {
-      screen: AddLocationScreen,
-    },
-    SearchLocation: {
-      screen: SearchLocationScreen,
-      options: {
-        title: '장소 검색',
-        presentation: 'modal',
-        cardStyle: {
-          backgroundColor: colors.WHITE,
+const Stack = createStackNavigator<MapStackParamList>();
+
+export const MapStack = () => {
+  const {theme} = useThemeStore();
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerBackButtonDisplayMode: 'minimal',
+        headerTintColor: colors[theme].BLACK,
+        headerStyle: {
+          backgroundColor: colors[theme].WHITE,
+          shadowColor: colors[theme].GRAY_500,
         },
-      },
-    },
-  },
-});
+        headerTitleStyle: {
+          fontSize: 16,
+        },
+      }}>
+      <Stack.Screen
+        name="MapHome"
+        component={MapHomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="AddLocation"
+        component={AddLocationScreen}
+        options={{
+          title: '장소 추가',
+          cardStyle: {
+            backgroundColor: colors[theme].WHITE,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="SearchLocation"
+        component={SearchLocationScreen}
+        options={{
+          title: '장소 검색',
+          presentation: 'modal',
+          cardStyle: {
+            backgroundColor: colors[theme].WHITE,
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+};

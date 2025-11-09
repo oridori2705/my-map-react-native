@@ -1,5 +1,5 @@
 import Ionicons from '@react-native-vector-icons/ionicons';
-import {createContext, PropsWithChildren, ReactNode, useContext} from 'react';
+import {PropsWithChildren, ReactNode} from 'react';
 import {
   GestureResponderEvent,
   Modal,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {colors} from '@/constant/colors';
+import useThemeStore, {Theme} from '../../store/theme';
 
 interface ActionMainProps extends ModalProps {
   children: ReactNode;
@@ -27,6 +28,9 @@ const ActionMain = ({
   hideAction,
   ...props
 }: ActionMainProps) => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   const onPressOutSide = (event: GestureResponderEvent) => {
     if (event.target === event.currentTarget) {
       hideAction();
@@ -41,19 +45,20 @@ const ActionMain = ({
         animationType={animationType}
         onRequestClose={hideAction}
         {...props}>
-        <View style={styles.modalContainer}>{children}</View>
-      </Modal>
-      {isVisible && (
         <SafeAreaView
           style={styles.actionBackground}
-          onTouchEnd={onPressOutSide}
-        />
-      )}
+          onTouchEnd={onPressOutSide}>
+          <View style={styles.modalContainer}>{children}</View>
+        </SafeAreaView>
+      </Modal>
     </>
   );
 };
 
 const Container = ({children}: PropsWithChildren) => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   return <View style={styles.actionContainer}>{children}</View>;
 };
 
@@ -69,6 +74,9 @@ const Button = ({
   isChecked = false,
   ...props
 }: ButtonProps) => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   return (
     <Pressable
       style={({pressed}) => [
@@ -81,13 +89,16 @@ const Button = ({
       </Text>
 
       {isChecked && (
-        <Ionicons name="checkmark" size={20} color={colors.BLUE_500} />
+        <Ionicons name="checkmark" size={20} color={colors[theme].BLUE_500} />
       )}
     </Pressable>
   );
 };
 
 const Title = ({children}: PropsWithChildren) => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   return (
     <View style={styles.titleContainer}>
       <Text style={styles.titleText}>{children}</Text>
@@ -96,6 +107,9 @@ const Title = ({children}: PropsWithChildren) => {
 };
 
 const Divider = () => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   return <View style={styles.border} />;
 };
 
@@ -105,6 +119,8 @@ interface FilterProps extends PressableProps {
 }
 
 const Filter = ({children, isSelected, ...props}: FilterProps) => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
   return (
     <Pressable style={styles.filterContainer} {...props}>
       <Text style={isSelected ? styles.filterSelectedText : styles.filterText}>
@@ -113,7 +129,7 @@ const Filter = ({children, isSelected, ...props}: FilterProps) => {
       <Ionicons
         name="chevron-down"
         size={22}
-        color={isSelected ? colors.BLUE_500 : colors.GRAY_300}
+        color={isSelected ? colors[theme].BLUE_500 : colors[theme].GRAY_300}
       />
     </Pressable>
   );
@@ -131,6 +147,9 @@ const CheckBox = ({
   isChecked = false,
   ...props
 }: CheckBoxProps) => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   return (
     <Pressable
       {...props}
@@ -140,7 +159,7 @@ const CheckBox = ({
       ]}>
       <Ionicons
         size={22}
-        color={colors.BLUE_500}
+        color={colors[theme].BLUE_500}
         name={isChecked ? 'checkmark-circle' : 'checkmark-circle-outline'}
       />
       {icon}
@@ -158,79 +177,80 @@ export const ActionSheet = Object.assign(ActionMain, {
   CheckBox,
 });
 
-const styles = StyleSheet.create({
-  actionBackground: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0 0 0 / 0.5)',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  actionContainer: {
-    backgroundColor: colors.GRAY_100,
-    overflow: 'hidden',
-    borderRadius: 15,
-    marginHorizontal: 10,
-    marginBottom: 10,
-  },
-  actionButtonPressed: {
-    backgroundColor: colors.GRAY_200,
-  },
-  actionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 50,
-    gap: 5,
-  },
-  actionText: {
-    fontSize: 17,
-    color: colors.BLUE_500,
-    fontWeight: '500',
-  },
-  dangerText: {
-    color: colors.RED_500,
-  },
-  titleContainer: {
-    padding: 15,
-    alignItems: 'center',
-  },
-  titleText: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: colors.BLACK,
-  },
-  border: {
-    borderBottomColor: colors.GRAY_200,
-    borderBottomWidth: 1,
-  },
-  filterContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    gap: 5,
-  },
-  filterText: {
-    color: colors.GRAY_300,
-    fontSize: 15,
-    fontWeight: '500',
-  },
-  filterSelectedText: {
-    color: colors.BLUE_500,
-    fontSize: 15,
-    fontWeight: '500',
-  },
-  checkBoxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    gap: 10,
-  },
-  checkBoxText: {
-    color: colors.BLACK,
-    fontSize: 15,
-  },
-});
+const styling = (theme: Theme) =>
+  StyleSheet.create({
+    actionBackground: {
+      ...StyleSheet.absoluteFillObject,
+      justifyContent: 'flex-end',
+      backgroundColor: 'rgba(0 0 0 / 0.5)',
+    },
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'flex-end',
+    },
+    actionContainer: {
+      backgroundColor: colors[theme].GRAY_100,
+      overflow: 'hidden',
+      borderRadius: 15,
+      marginHorizontal: 10,
+      marginBottom: 10,
+    },
+    actionButtonPressed: {
+      backgroundColor: colors[theme].GRAY_200,
+    },
+    actionButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: 50,
+      gap: 5,
+    },
+    actionText: {
+      fontSize: 17,
+      color: colors[theme].BLUE_500,
+      fontWeight: '500',
+    },
+    dangerText: {
+      color: colors[theme].RED_500,
+    },
+    titleContainer: {
+      padding: 15,
+      alignItems: 'center',
+    },
+    titleText: {
+      fontSize: 16,
+      fontWeight: '500',
+      color: colors[theme].BLACK,
+    },
+    border: {
+      borderBottomColor: colors[theme].GRAY_200,
+      borderBottomWidth: 1,
+    },
+    filterContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 10,
+      gap: 5,
+    },
+    filterText: {
+      color: colors[theme].GRAY_300,
+      fontSize: 15,
+      fontWeight: '500',
+    },
+    filterSelectedText: {
+      color: colors[theme].BLUE_500,
+      fontSize: 15,
+      fontWeight: '500',
+    },
+    checkBoxContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: 10,
+      paddingHorizontal: 30,
+      gap: 10,
+    },
+    checkBoxText: {
+      color: colors[theme].BLACK,
+      fontSize: 15,
+    },
+  });

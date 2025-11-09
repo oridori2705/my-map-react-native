@@ -45,7 +45,7 @@ export const toastConfig = {
 
 const styles = StyleSheet.create({
   successToast: {
-    borderLeftColor: colors.BLUE_500,
+    borderLeftColor: colors.light.BLUE_500,
     borderLeftWidth: 6,
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
 
   errorToast: {
-    borderLeftColor: colors.RED_500,
+    borderLeftColor: colors.light.RED_500,
     borderLeftWidth: 6,
     backgroundColor: '#FFFFFF',
     borderRadius: 12,

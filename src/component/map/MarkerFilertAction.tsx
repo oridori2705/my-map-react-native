@@ -3,13 +3,20 @@ import {StyleSheet, Text, View} from 'react-native';
 import {ActionSheet} from '../common/ActionSheet';
 import {colors} from '@/constant/colors';
 import useFilterStore from '@/store/filter';
+import useThemeStore, {Theme} from '../../store/theme';
 
 interface MarkerFilterActionProps {
   isVisible: boolean;
   hideAction: () => void;
 }
 
-function MarkerFilterAction({isVisible, hideAction}: MarkerFilterActionProps) {
+const MarkerFilterAction = ({
+  isVisible,
+  hideAction,
+}: MarkerFilterActionProps) => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   const [filterCondition, setFilterCondition] = useState('색상');
   const {filters, setFilters, resetFilters} = useFilterStore();
 
@@ -40,11 +47,11 @@ function MarkerFilterAction({isVisible, hideAction}: MarkerFilterActionProps) {
         {filterCondition === '색상' && (
           <>
             {[
-              colors.PINK_400,
-              colors.YELLOW_400,
-              colors.GREEN_400,
-              colors.BLUE_400,
-              colors.PURPLE_400,
+              colors[theme].PINK_400,
+              colors[theme].YELLOW_400,
+              colors[theme].GREEN_400,
+              colors[theme].BLUE_400,
+              colors[theme].PURPLE_400,
             ].map(color => (
               <ActionSheet.CheckBox
                 key={color}
@@ -80,22 +87,23 @@ function MarkerFilterAction({isVisible, hideAction}: MarkerFilterActionProps) {
       </ActionSheet.Container>
     </ActionSheet>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  filterContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: 10,
-    justifyContent: 'space-around',
-  },
-  marker: {
-    width: 20,
-    height: 20,
-  },
-  resetButton: {
-    color: colors.GRAY_700,
-    textAlign: 'center',
-  },
-});
+const styling = (theme: Theme) =>
+  StyleSheet.create({
+    filterContainer: {
+      flexDirection: 'row',
+      paddingHorizontal: 10,
+      justifyContent: 'space-around',
+    },
+    marker: {
+      width: 20,
+      height: 20,
+    },
+    resetButton: {
+      color: colors[theme].GRAY_700,
+      textAlign: 'center',
+    },
+  });
 
 export default MarkerFilterAction;

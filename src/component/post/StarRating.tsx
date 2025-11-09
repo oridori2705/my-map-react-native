@@ -3,6 +3,7 @@ import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {colors} from '@/constant/colors';
 import {Text} from 'react-native-gesture-handler';
+import useThemeStore, {Theme} from '../../store/theme';
 
 interface StarRatingProps {
   maxStars?: number;
@@ -23,6 +24,9 @@ const StarRating = ({
   onChangeScore,
   disabled = false,
 }: StarRatingProps) => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   const [rating, setRating] = useState<number>(score);
   const [hoverRating, setHoverRating] = useState<number>(0);
 
@@ -86,28 +90,29 @@ const StarRating = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 15,
-    borderWidth: 1,
-    borderColor: colors.GRAY_200,
-  },
-  starContainer: {
-    gap: 8,
-    marginHorizontal: 'auto',
-    flexDirection: 'row',
-  },
-  labelContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  labelText: {
-    color: colors.GRAY_700,
-  },
-  starButton: {
-    padding: 4,
-  },
-});
+const styling = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 15,
+      borderWidth: 1,
+      borderColor: colors[theme].GRAY_200,
+    },
+    starContainer: {
+      gap: 8,
+      marginHorizontal: 'auto',
+      flexDirection: 'row',
+    },
+    labelContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    labelText: {
+      color: colors[theme].GRAY_700,
+    },
+    starButton: {
+      padding: 4,
+    },
+  });
 
 export default StarRating;

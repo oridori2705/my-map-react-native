@@ -2,6 +2,7 @@ import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {colors} from '@/constant/colors';
+import useThemeStore, {Theme} from '../../store/theme';
 
 interface PaginationProps {
   pageParam: number;
@@ -22,7 +23,9 @@ const Pagination = ({
   itemsPerPage = 15,
   pagesToShow = 5,
 }: PaginationProps) => {
-  console.log(totalLength);
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   const totalPages = Math.ceil(totalLength / itemsPerPage);
   const halfPagesToShow = Math.floor(pagesToShow / 2);
 
@@ -57,7 +60,7 @@ const Pagination = ({
         <Ionicons
           name="chevron-back"
           size={15}
-          color={pageParam > 1 ? colors.BLACK : colors.GRAY_300}
+          color={pageParam > 1 ? colors[theme].BLACK : colors[theme].GRAY_300}
         />
         <Text style={pageParam > 1 ? styles.pageText : styles.disabledText}>
           이전
@@ -103,60 +106,65 @@ const Pagination = ({
         <Ionicons
           name="chevron-forward"
           size={15}
-          color={pageParam < totalPages ? colors.BLACK : colors.GRAY_300}
+          color={
+            pageParam < totalPages
+              ? colors[theme].BLACK
+              : colors[theme].GRAY_300
+          }
         />
       </Pressable>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 10,
-  },
-  pageButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-    height: 32,
-    paddingHorizontal: 8,
-  },
-  pageText: {
-    fontSize: 14,
-    color: colors.BLACK,
-    fontWeight: '500',
-  },
-  disabledText: {
-    fontSize: 14,
-    color: colors.GRAY_300,
-  },
-  pageNumbersContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-  pageNumberButton: {
-    width: 32,
-    height: 32,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 6,
-    backgroundColor: 'transparent',
-  },
-  currentPageButton: {
-    backgroundColor: colors.BLACK,
-  },
-  pageNumberText: {
-    fontSize: 14,
-    color: colors.BLACK,
-    fontWeight: '500',
-  },
-  currentPageText: {
-    color: colors.WHITE,
-    fontWeight: '700',
-  },
-});
+const styling = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: 10,
+    },
+    pageButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 5,
+      height: 32,
+      paddingHorizontal: 8,
+    },
+    pageText: {
+      fontSize: 14,
+      color: colors[theme].BLACK,
+      fontWeight: '500',
+    },
+    disabledText: {
+      fontSize: 14,
+      color: colors[theme].GRAY_300,
+    },
+    pageNumbersContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+    },
+    pageNumberButton: {
+      width: 32,
+      height: 32,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 6,
+      backgroundColor: 'transparent',
+    },
+    currentPageButton: {
+      backgroundColor: colors[theme].BLACK,
+    },
+    pageNumberText: {
+      fontSize: 14,
+      color: colors[theme].BLACK,
+      fontWeight: '500',
+    },
+    currentPageText: {
+      color: colors[theme].WHITE,
+      fontWeight: '700',
+    },
+  });
 export default Pagination;

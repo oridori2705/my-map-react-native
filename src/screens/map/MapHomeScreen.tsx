@@ -1,11 +1,5 @@
-import {useCallback, useState} from 'react';
-import {
-  ActivityIndicator,
-  Alert,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {useState} from 'react';
+import {ActivityIndicator, Alert, StyleSheet, View} from 'react-native';
 
 import MapView, {LatLng, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import DrawerButton from '@/component/common/DrawerButton';
@@ -27,10 +21,14 @@ import MarkerModal from '@/component/map/MarkerModal';
 import useLocationStore from '@/store/location';
 import useFilterStore from '@/store/filter';
 import MarkerFilterAction from '../../component/map/MarkerFilertAction';
+import useThemeStore, {Theme} from '../../store/theme';
 
 type Navigation = StackNavigationProp<MapStackParamList>;
 
 const MapHomeScreen = () => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   const navigation = useNavigation<Navigation>();
   //노치 부분의 길이를 구하여서 그 길이만큼 맵을 밀어내기 위해 사용
   const inset = useSafeAreaInsets();
@@ -108,7 +106,7 @@ const MapHomeScreen = () => {
   if (!isFocused || isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors.PINK_700} />
+        <ActivityIndicator size="large" color={colors[theme].PINK_700} />
       </View>
     );
   }
@@ -117,9 +115,10 @@ const MapHomeScreen = () => {
     <>
       <DrawerButton
         style={[styles.drawerButton, {top: inset.top + 10}]}
-        color={colors.WHITE}
+        color={colors[theme].WHITE}
       />
       <MapView
+        userInterfaceStyle={theme}
         googleMapId="f397ec96980a97c3c96a731d"
         style={styles.container}
         ref={mapRef}
@@ -173,53 +172,54 @@ const MapHomeScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.WHITE,
-  },
-  drawerButton: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    zIndex: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    backgroundColor: colors.PINK_700,
-    borderTopRightRadius: 50,
-    borderBottomRightRadius: 50,
-    boxShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
-  },
-  buttonList: {
-    position: 'absolute',
-    bottom: 30,
-    right: 20,
-    zIndex: 1,
-  },
-  mapButton: {
-    backgroundColor: colors.PINK_700,
-    marginVertical: 5,
-    height: 45,
-    width: 45,
-    borderRadius: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
-  },
-  filterBadge: {
-    position: 'absolute',
-    top: 2,
-    right: 2,
-    width: 10,
-    height: 10,
-    borderRadius: 4,
-    backgroundColor: colors.GREEN_400,
-  },
-});
+const styling = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colors[theme].WHITE,
+    },
+    drawerButton: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      zIndex: 1,
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      backgroundColor: colors[theme].PINK_700,
+      borderTopRightRadius: 50,
+      borderBottomRightRadius: 50,
+      boxShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
+    },
+    buttonList: {
+      position: 'absolute',
+      bottom: 30,
+      right: 20,
+      zIndex: 1,
+    },
+    mapButton: {
+      backgroundColor: colors[theme].PINK_700,
+      marginVertical: 5,
+      height: 45,
+      width: 45,
+      borderRadius: 45,
+      alignItems: 'center',
+      justifyContent: 'center',
+      boxShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
+    },
+    filterBadge: {
+      position: 'absolute',
+      top: 2,
+      right: 2,
+      width: 10,
+      height: 10,
+      borderRadius: 4,
+      backgroundColor: colors[theme].GREEN_400,
+    },
+  });
 
 export default MapHomeScreen;

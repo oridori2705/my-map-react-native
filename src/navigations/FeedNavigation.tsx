@@ -8,69 +8,76 @@ import DrawerButton from '@/component/common/DrawerButton';
 import ImageZoomScreen from '@/screens/feed/ImageZoomScreen';
 import {Pressable} from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import {FeedStackParamList} from '../types/navigation';
+import useThemeStore from '../store/theme';
 
-export const FeedStack = createStackNavigator({
-  screenOptions: {
-    headerTitleAlign: 'center',
-    headerBackButtonDisplayMode: 'minimal',
-    headerTintColor: colors.BLACK,
-    headerStyle: {
-      backgroundColor: colors.WHITE,
-      shadowColor: colors.GRAY_500,
-    },
-    headerTitleStyle: {
-      fontSize: 16,
-    },
-    cardStyle: {
-      backgroundColor: colors.WHITE,
-    },
-  },
-  screens: {
-    FeedList: {
-      screen: FeedListScreen,
-      options: ({navigation}) => ({
-        title: '피드',
-        headerLeft: () => <DrawerButton />,
-        headerRight: () => (
-          <Pressable
-            style={{paddingHorizontal: 12}}
-            onPress={() => navigation.navigate('FeedFavorite')}>
-            <Ionicons name="star" size={25} color={colors.PINK_700} />
-          </Pressable>
-        ),
-      }),
-    },
-    FeedDetail: {
-      screen: FeedDetailScreen,
-      options: {
-        headerShown: false,
-      },
-    },
-    FeedFavorite: {
-      screen: FeedFavoriteScreen,
-      options: ({navigation}) => ({
-        title: '즐겨찾기',
-        headerLeft: () => (
-          <Ionicons
-            name="chevron-back"
-            size={30}
-            color={colors.BLACK}
-            onPress={() => navigation.navigate('FeedList')}
-          />
-        ),
-      }),
-    },
-    EditLocation: {
-      screen: EditLocationScreen,
-      options: {
-        title: '장소 수정',
-      },
-    },
-    ImageZoom: {
-      screen: ImageZoomScreen,
-      options: {
-        headerShown: false,
-      },
-    },
-  },
-});
+const Stack = createStackNavigator<FeedStackParamList>();
+
+export const FeedStack = () => {
+  const {theme} = useThemeStore();
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerBackButtonDisplayMode: 'minimal',
+        headerTintColor: colors[theme].BLACK,
+        headerStyle: {
+          backgroundColor: colors[theme].WHITE,
+          shadowColor: colors[theme].GRAY_500,
+        },
+        headerTitleStyle: {
+          fontSize: 16,
+        },
+        cardStyle: {
+          backgroundColor: colors[theme].WHITE,
+        },
+      }}>
+      <Stack.Screen
+        name="FeedList"
+        component={FeedListScreen}
+        options={({navigation}) => ({
+          title: '피드',
+          headerLeft: () => <DrawerButton />,
+          headerRight: () => (
+            <Pressable
+              style={{paddingHorizontal: 12}}
+              onPress={() => navigation.navigate('FeedFavorite')}>
+              <Ionicons name="star" size={25} color={colors[theme].PINK_700} />
+            </Pressable>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="FeedDetail"
+        component={FeedDetailScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="FeedFavorite"
+        component={FeedFavoriteScreen}
+        options={({navigation}) => ({
+          title: '즐겨찾기',
+          headerLeft: () => (
+            <Ionicons
+              name="chevron-back"
+              size={30}
+              color={colors[theme].BLACK}
+              onPress={() => navigation.navigate('FeedList')}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="EditLocation"
+        component={EditLocationScreen}
+        options={{title: '장소 수정'}}
+      />
+      <Stack.Screen
+        name="ImageZoom"
+        component={ImageZoomScreen}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+};

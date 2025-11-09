@@ -1,6 +1,7 @@
 import {colors} from '@/constant/colors';
 import React, {Ref} from 'react';
 import {StyleSheet, Text, TextInput, TextInputProps, View} from 'react-native';
+import useThemeStore, {Theme} from '../../store/theme';
 
 interface InputFieldProps extends TextInputProps {
   ref?: Ref<TextInput>;
@@ -16,11 +17,13 @@ const CustomInput = ({
   disabled = false,
   ...props
 }: InputFieldProps) => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
   return (
     <View>
       <TextInput
         ref={ref}
-        placeholderTextColor={colors.GRAY_500}
+        placeholderTextColor={colors[theme].GRAY_500}
         autoCapitalize="none"
         spellCheck={false}
         autoCorrect={false}
@@ -37,34 +40,35 @@ const CustomInput = ({
   );
 };
 
-const styles = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-    borderColor: colors.GRAY_200,
-    justifyContent: 'center',
-    height: 50,
-    paddingHorizontal: 10,
-    fontSize: 16,
-    color: colors.BLACK,
-  },
-  multiLine: {
-    height: 150,
-    paddingVertical: 10,
-    textAlignVertical: 'top',
-  },
-  inputError: {
-    borderWidth: 1,
-    borderColor: colors.RED_300,
-  },
-  error: {
-    color: colors.RED_500,
-    fontSize: 12,
-    paddingTop: 5,
-  },
-  disabled: {
-    backgroundColor: colors.GRAY_200,
-    color: colors.GRAY_700,
-  },
-});
+const styling = (theme: Theme) =>
+  StyleSheet.create({
+    input: {
+      borderWidth: 1,
+      borderColor: colors[theme].GRAY_200,
+      justifyContent: 'center',
+      height: 50,
+      paddingHorizontal: 10,
+      fontSize: 16,
+      color: colors[theme].BLACK,
+    },
+    multiLine: {
+      height: 150,
+      paddingVertical: 10,
+      textAlignVertical: 'top',
+    },
+    inputError: {
+      borderWidth: 1,
+      borderColor: colors[theme].RED_300,
+    },
+    error: {
+      color: colors[theme].RED_500,
+      fontSize: 12,
+      paddingTop: 5,
+    },
+    disabled: {
+      backgroundColor: colors[theme].GRAY_200,
+      color: colors[theme].GRAY_700,
+    },
+  });
 
 export default CustomInput;

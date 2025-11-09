@@ -15,8 +15,12 @@ import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import useGetCalendarPosts from '@/hooks/queries/useGetCalendarPosts';
 import Schedule from '@/component/calendar/Schedule';
+import useThemeStore, {Theme} from '../../store/theme';
 
 const CalendarScreen = () => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
@@ -50,13 +54,15 @@ const CalendarScreen = () => {
     };
     const todayComponent = () => (
       <Pressable onPress={moveToToday} style={{paddingHorizontal: 10}}>
-        <Text style={{color: colors.PINK_700, fontWeight: 'bold'}}>오늘</Text>
+        <Text style={{color: colors[theme].PINK_700, fontWeight: 'bold'}}>
+          오늘
+        </Text>
       </Pressable>
     );
     navigation.setOptions({
       headerRight: todayComponent,
     });
-  }, [navigation]);
+  }, [navigation, theme]);
 
   if (isPending || isError) {
     return <></>;
@@ -87,15 +93,16 @@ const CalendarScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.WHITE,
-  },
-  scheduleContainer: {
-    backgroundColor: colors.WHITE,
-    padding: 20,
-  },
-});
+const styling = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors[theme].WHITE,
+    },
+    scheduleContainer: {
+      backgroundColor: colors[theme].WHITE,
+      padding: 20,
+    },
+  });
 
 export default CalendarScreen;

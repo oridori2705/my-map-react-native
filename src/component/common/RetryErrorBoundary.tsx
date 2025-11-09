@@ -4,12 +4,16 @@ import {ErrorBoundary} from 'react-error-boundary';
 import {StyleSheet, Text, View} from 'react-native';
 import CustomButton from './CustomButton';
 import {colors} from '@/constant/colors';
+import useThemeStore, {Theme} from '../../store/theme';
 
 const ErrorFallback = ({
   resetErrorBoundary,
 }: {
   resetErrorBoundary: () => void;
 }) => {
+  const {theme} = useThemeStore();
+  const styles = styling(theme);
+
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}>잠시 후 다시 시도해주세요.</Text>
@@ -36,23 +40,24 @@ function RetryErrorBoundary({children}: PropsWithChildren) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 10,
-    backgroundColor: colors.WHITE,
-  },
-  titleText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: colors.BLACK,
-  },
-  descriptionText: {
-    fontSize: 15,
-    color: colors.GRAY_500,
-  },
-});
+const styling = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 10,
+      backgroundColor: colors[theme].WHITE,
+    },
+    titleText: {
+      fontSize: 18,
+      fontWeight: '600',
+      color: colors[theme].BLACK,
+    },
+    descriptionText: {
+      fontSize: 15,
+      color: colors[theme].GRAY_500,
+    },
+  });
 
 export default RetryErrorBoundary;

@@ -8,30 +8,42 @@ import {colors} from '@/constant/colors';
 import useAuth from '@/hooks/queries/useAuth';
 import {SettingStackParamList} from '@/types/navigation';
 import SettingItem from '@/component/setting/SettingItem';
+import useThemeStore from '@/store/theme';
+import useModal from '@/hooks/useModal';
+import DarkModeActionSheet from '@/component/setting/DarkModeActionSheet';
 
 type Navigation = NavigationProp<SettingStackParamList>;
 
 function SettingHomeScreen() {
+  const {theme} = useThemeStore();
+  const darkModeAction = useModal();
+
   const navigation = useNavigation<Navigation>();
   const {logoutMutation} = useAuth();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View style={styles.space} />
-        <SettingItem
-          title="프로필 수정"
-          onPress={() => navigation.navigate('EditProfile')}
-        />
-        <SettingItem title="다크 모드" />
-        <View style={styles.space} />
-        <SettingItem
-          title="로그아웃"
-          color={colors.RED_500}
-          onPress={() => logoutMutation.mutate(null)}
-        />
-      </ScrollView>
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={styles.container}>
+        <ScrollView>
+          <View style={styles.space} />
+          <SettingItem
+            title="프로필 수정"
+            onPress={() => navigation.navigate('EditProfile')}
+          />
+          <SettingItem title="다크 모드" onPress={darkModeAction.show} />
+          <View style={styles.space} />
+          <SettingItem
+            title="로그아웃"
+            color={colors[theme].RED_500}
+            onPress={() => logoutMutation.mutate(null)}
+          />
+        </ScrollView>
+      </SafeAreaView>
+      <DarkModeActionSheet
+        isVisible={darkModeAction.isVisible}
+        hideAction={darkModeAction.hide}
+      />
+    </>
   );
 }
 
