@@ -25,6 +25,7 @@ import Toast from 'react-native-toast-message';
 const useSignup = (mutationOptions?: UseMutationCustomOptions) => {
   return useMutation({
     mutationFn: postSignup, // 회원가입 요청 함수
+    throwOnError: error => Number(error.response?.status) >= 500, // 500번대 에러는 throw
     onError: error => {
       Toast.show({
         type: 'error',
@@ -45,6 +46,7 @@ const useSignup = (mutationOptions?: UseMutationCustomOptions) => {
 const useLogin = (mutationOptions?: UseMutationCustomOptions) => {
   return useMutation({
     mutationFn: postLogin, // 로그인 요청 함수
+    throwOnError: error => Number(error.response?.status) >= 500, // 500번대 에러는 throw
     onError: error => {
       Toast.show({
         type: 'error',
