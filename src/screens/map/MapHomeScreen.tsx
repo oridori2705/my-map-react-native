@@ -18,7 +18,9 @@ import {MapStackParamList} from '@/types/navigation';
 import useGetMarkers from '@/hooks/queries/useGetMarkers';
 import useModal from '@/hooks/useModal';
 import MarkerModal from '@/component/map/MarkerModal';
-import useLocationStore from '../../store/location';
+import useLocationStore from '@/store/location';
+import useFilterStore from '@/store/filter';
+import MarkerFilterAction from '../../component/map/MarkerFilertAction';
 
 type Navigation = StackNavigationProp<MapStackParamList>;
 
@@ -26,6 +28,9 @@ const MapHomeScreen = () => {
   const navigation = useNavigation<Navigation>();
   //노치 부분의 길이를 구하여서 그 길이만큼 맵을 밀어내기 위해 사용
   const inset = useSafeAreaInsets();
+
+  //마커 필터링 전역 상태
+  const {filters} = useFilterStore();
 
   //선택한 위치 상태
   const {selectLocation, setSelectLocation} = useLocationStore();
@@ -37,9 +42,20 @@ const MapHomeScreen = () => {
   const {mapRef, moveMapView, handleChangeDelta} = useMoveMapView();
 
   //마커 데이터 불러오기
-  const {data: markers = []} = useGetMarkers();
+  const {data: markers = []} = useGetMarkers({
+    select: data =>
+      data.filter(
+        marker =>
+          filters[marker.color] === true &&
+          filters[String(marker.score)] === true,
+      ),
+  });
 
+  //마커 모달 상태(마커 클릭 시 모달)
   const markerModal = useModal();
+
+  //마커 필터링 모달 상태
+  const filterAction = useModal();
 
   //선택한 마커 ID 상태
   const [markerId, setSetMarkerId] = useState<number>();
@@ -120,6 +136,7 @@ const MapHomeScreen = () => {
         {selectLocation && <Marker coordinate={selectLocation} />}
       </MapView>
       <View style={styles.buttonList}>
+        <MapIconButton name="filter" onPress={filterAction.show} />
         <MapIconButton
           name="magnifying-glass"
           onPress={() => navigation.navigate('SearchLocation')}
@@ -134,6 +151,10 @@ const MapHomeScreen = () => {
         isVisible={markerModal.isVisible}
         markerId={Number(markerId)}
         hide={markerModal.hide}
+      />
+      <MarkerFilterAction
+        isVisible={filterAction.isVisible}
+        hideAction={filterAction.hide}
       />
     </>
   );
