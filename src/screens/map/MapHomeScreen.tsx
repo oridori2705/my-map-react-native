@@ -1,5 +1,11 @@
 import {useCallback, useState} from 'react';
-import {ActivityIndicator, Alert, StyleSheet, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import MapView, {LatLng, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import DrawerButton from '@/component/common/DrawerButton';
@@ -31,6 +37,9 @@ const MapHomeScreen = () => {
 
   //마커 필터링 전역 상태
   const {filters} = useFilterStore();
+
+  // 필터가 하나라도 비활성화되어 있으면 true 반환
+  const isFilterActive = Object.values(filters).some(value => !value);
 
   //선택한 위치 상태
   const {selectLocation, setSelectLocation} = useLocationStore();
@@ -136,7 +145,11 @@ const MapHomeScreen = () => {
         {selectLocation && <Marker coordinate={selectLocation} />}
       </MapView>
       <View style={styles.buttonList}>
-        <MapIconButton name="filter" onPress={filterAction.show} />
+        <View>
+          <MapIconButton name="filter" onPress={filterAction.show} />
+          {isFilterActive && <View style={styles.filterBadge} />}
+        </View>
+
         <MapIconButton
           name="magnifying-glass"
           onPress={() => navigation.navigate('SearchLocation')}
@@ -197,6 +210,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     boxShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
+  },
+  filterBadge: {
+    position: 'absolute',
+    top: 2,
+    right: 2,
+    width: 10,
+    height: 10,
+    borderRadius: 4,
+    backgroundColor: colors.GREEN_400,
   },
 });
 
