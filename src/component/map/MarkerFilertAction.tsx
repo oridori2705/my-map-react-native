@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {ActionSheet} from '../common/ActionSheet';
 import {colors} from '@/constant/colors';
 import useFilterStore from '@/store/filter';
@@ -11,7 +11,7 @@ interface MarkerFilterActionProps {
 
 function MarkerFilterAction({isVisible, hideAction}: MarkerFilterActionProps) {
   const [filterCondition, setFilterCondition] = useState('색상');
-  const {filters, setFilters} = useFilterStore();
+  const {filters, setFilters, resetFilters} = useFilterStore();
 
   const handleFilter = (name: string) => {
     setFilters({...filters, [name]: !filters[name]});
@@ -24,6 +24,11 @@ function MarkerFilterAction({isVisible, hideAction}: MarkerFilterActionProps) {
       animationType="fade">
       <ActionSheet.Container>
         <ActionSheet.Title>마커 필터링</ActionSheet.Title>
+        <ActionSheet.Button onPress={resetFilters}>
+          <View>
+            <Text style={styles.resetButton}>초기화</Text>
+          </View>
+        </ActionSheet.Button>
         <ActionSheet.Divider />
         <View style={styles.filterContainer}>
           {['색상', '평점'].map(condition => (
@@ -84,7 +89,10 @@ const styles = StyleSheet.create({
   marker: {
     width: 20,
     height: 20,
-    borderRadius: 20,
+  },
+  resetButton: {
+    color: colors.GRAY_700,
+    textAlign: 'center',
   },
 });
 
