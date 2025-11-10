@@ -33,7 +33,7 @@ const AddLocationScreen = ({route}: Props) => {
       title: '',
       description: '',
       date: new Date(),
-      color: colors.PINK_400,
+      color: colors.light.PINK_400,
       score: 3,
     },
     validate: validateAddPost,

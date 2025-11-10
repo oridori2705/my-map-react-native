@@ -54,7 +54,7 @@ const CalendarScreen = () => {
     };
     const todayComponent = () => (
       <Pressable onPress={moveToToday} style={{paddingHorizontal: 10}}>
-        <Text style={{color: colors[theme].PINK_700, fontWeight: 'bold'}}>
+        <Text style={{color: colors[theme].GREEN_700, fontWeight: 'bold'}}>
           오늘
         </Text>
       </Pressable>

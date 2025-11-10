@@ -106,7 +106,7 @@ const MapHomeScreen = () => {
   if (!isFocused || isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors[theme].PINK_700} />
+        <ActivityIndicator size="large" color={colors[theme].GREEN_700} />
       </View>
     );
   }
@@ -190,7 +190,7 @@ const styling = (theme: Theme) =>
       zIndex: 1,
       paddingVertical: 10,
       paddingHorizontal: 15,
-      backgroundColor: colors[theme].PINK_700,
+      backgroundColor: colors[theme].GREEN_700,
       borderTopRightRadius: 50,
       borderBottomRightRadius: 50,
       boxShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
@@ -202,7 +202,7 @@ const styling = (theme: Theme) =>
       zIndex: 1,
     },
     mapButton: {
-      backgroundColor: colors[theme].PINK_700,
+      backgroundColor: colors[theme].GREEN_700,
       marginVertical: 5,
       height: 45,
       width: 45,

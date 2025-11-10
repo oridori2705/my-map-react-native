@@ -74,7 +74,7 @@ const styling = (theme: Theme) =>
       fontWeight: 'bold',
     },
     todayText: {
-      color: colors[theme].PINK_700,
+      color: colors[theme].GREEN_700,
       fontWeight: 'bold',
     },
 

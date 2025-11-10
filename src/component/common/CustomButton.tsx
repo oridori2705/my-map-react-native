@@ -54,12 +54,12 @@ const styling = (theme: Theme) =>
       alignItems: 'center',
     },
     filled: {
-      backgroundColor: colors[theme].PINK_700,
+      backgroundColor: colors[theme].GREEN_700,
     },
     outlined: {
       backgroundColor: colors[theme].WHITE,
       borderWidth: 1,
-      borderColor: colors[theme].PINK_700,
+      borderColor: colors[theme].GREEN_700,
     },
     filledText: {
       fontSize: 14,
@@ -69,7 +69,7 @@ const styling = (theme: Theme) =>
     outlinedText: {
       fontSize: 14,
       fontWeight: 'bold',
-      color: colors[theme].PINK_700,
+      color: colors[theme].GREEN_700,
     },
     large: {
       width: '100%',

@@ -111,8 +111,8 @@ const styling = (theme: Theme) =>
       justifyContent: 'center',
     },
     currentYearButton: {
-      backgroundColor: colors[theme].PINK_700,
-      borderColor: colors[theme].PINK_700,
+      backgroundColor: colors[theme].GREEN_700,
+      borderColor: colors[theme].GREEN_700,
     },
     yearText: {
       fontSize: 16,

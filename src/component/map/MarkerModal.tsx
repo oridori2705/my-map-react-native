@@ -178,7 +178,7 @@ const styling = (theme: Theme) =>
     dateText: {
       fontSize: 12,
       fontWeight: 'bold',
-      color: colors[theme].PINK_700,
+      color: colors[theme].GREEN_700,
     },
     nextButton: {
       width: 40,

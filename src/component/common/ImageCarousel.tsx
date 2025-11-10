@@ -125,7 +125,7 @@ const styling = (theme: Theme) =>
       borderRadius: 8,
     },
     currentPageDot: {
-      backgroundColor: colors[theme].PINK_700,
+      backgroundColor: colors[theme].GREEN_700,
     },
   });
 

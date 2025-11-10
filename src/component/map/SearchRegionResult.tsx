@@ -58,7 +58,7 @@ const SearchRegionResult = ({regionInfo}: SearchRegionResultProps) => {
               <Ionicons
                 name="location"
                 size={10}
-                color={colors[theme].PINK_700}
+                color={colors[theme].GREEN_700}
               />
               <Text
                 style={styles.placeText}
