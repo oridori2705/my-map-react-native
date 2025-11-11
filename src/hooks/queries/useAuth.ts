@@ -1,4 +1,4 @@
-import {useMutation, useQuery} from '@tanstack/react-query';
+import {MutationFunction, useMutation, useQuery} from '@tanstack/react-query';
 import queryClient from '@/api/queryClient';
 import {removeEncryptStorage, setEncryptStorage} from '@/utils/encryptStorage';
 import {useEffect} from 'react';
@@ -7,9 +7,11 @@ import {
   editProfile,
   getAccessToken,
   getProfile,
+  kakaoLogin,
   logout,
   postLogin,
   postSignup,
+  ResponseToken,
 } from '@/api/auth';
 import {UseMutationCustomOptions, UseQueryCustomOptions} from '@/types/api';
 import {removeHeader, setHeader} from '@/utils/header';
@@ -43,31 +45,31 @@ const useSignup = (mutationOptions?: UseMutationCustomOptions) => {
  * - refreshToken을 안전하게 로컬 스토리지(EncryptStorage)에 저장
  * - 로그인 이후 accessToken 자동 갱신 쿼리를 강제 실행
  */
-const useLogin = (mutationOptions?: UseMutationCustomOptions) => {
+const useLogin = <T>(
+  loginAPI: MutationFunction<ResponseToken, T>,
+  mutationOptions?: UseMutationCustomOptions,
+) => {
   return useMutation({
-    mutationFn: postLogin, // 로그인 요청 함수
-    throwOnError: error => Number(error.response?.status) >= 500, // 500번대 에러는 throw
-    onError: error => {
-      Toast.show({
-        type: 'error',
-        text1: error.response?.data?.message || '로그인에 실패했습니다.',
-        position: 'bottom',
-      });
-    },
+    mutationFn: loginAPI,
     onSuccess: async ({accessToken, refreshToken}) => {
-      // 1. accessToken을 Authorization 헤더에 설정(utils/header.ts에 존재하는 함수)
       setHeader('Authorization', `Bearer ${accessToken}`);
-      // 2. refreshToken을 암호화 저장소에 저장
-      await setEncryptStorage('refreshToken', refreshToken);
-      // 3. accessToken 자동 갱신 쿼리 강제 실행 (로그인 직후 갱신 주기 시작)
+      await setEncryptStorage(storageKeys.REFRESH_TOKEN, refreshToken);
       queryClient.fetchQuery({
-        queryKey: ['auth', 'getAccessToken'],
+        queryKey: [queryKeys.AUTH, queryKeys.GET_ACCESS_TOKEN],
       });
     },
-    ...mutationOptions, // 외부에서 전달된 옵션 병합
+    throwOnError: error => Number(error.response?.status) >= 500,
+    ...mutationOptions,
   });
 };
 
+function useEmailLogin(mutationOptions?: UseMutationCustomOptions) {
+  return useLogin(postLogin, mutationOptions);
+}
+
+function useKakaoLogin(mutationOptions?: UseMutationCustomOptions) {
+  return useLogin(kakaoLogin, mutationOptions);
+}
 /**
  * refreshToken을 이용해 주기적으로 accessToken을 갱신하는 훅
  * - 일정 시간마다(getAccessToken API를) 호출해 accessToken 재발급
@@ -156,7 +158,8 @@ const useUpdateProfile = (mutationOptions?: UseMutationCustomOptions) => {
 
 const useAuth = () => {
   const signupMutation = useSignup();
-  const loginMutation = useLogin();
+  const loginMutation = useEmailLogin();
+  const kakaoLoginMutation = useKakaoLogin();
   const refreshTokenQuery = useGetRefreshToken();
   const {data, isSuccess: isLogin} = useGetProfile({
     enabled: refreshTokenQuery.isSuccess,
@@ -173,6 +176,7 @@ const useAuth = () => {
     },
     signupMutation,
     loginMutation,
+    kakaoLoginMutation,
     isLogin,
     logoutMutation,
     profileMutation,

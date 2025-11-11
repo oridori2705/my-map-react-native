@@ -5,6 +5,7 @@ import LoginScreen from '@/screens/auth/LoginScreen';
 import SignupScreen from '@/screens/auth/SignupScreen';
 import {colors} from '@/constant/colors';
 import useThemeStore from '../store/theme';
+import KakaoLoginScreen from '../screens/auth/KakaoLoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -44,6 +45,11 @@ const AuthNavigation = () => {
         name="Signup"
         component={SignupScreen}
         options={{title: '회원가입'}}
+      />
+      <Stack.Screen
+        name="KakaoLogin"
+        component={KakaoLoginScreen}
+        options={{title: '카카오 로그인'}}
       />
     </Stack.Navigator>
   );

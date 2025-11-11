@@ -26,6 +26,12 @@ const AuthHomeScreen = () => {
       </View>
       <View style={styles.buttonContainer}>
         <CustomButton
+          label="카카오 로그인"
+          style={styles.kakaoButtonContainer}
+          textStyle={styles.kakaoButtonText}
+          onPress={() => navigation.navigate('KakaoLogin')}
+        />
+        <CustomButton
           label="이메일 로그인"
           onPress={() => navigation.navigate('Login')}
         />
@@ -61,6 +67,12 @@ const styling = (theme: Theme) =>
       fontWeight: '500',
       padding: 10,
       color: colors[theme].BLACK,
+    },
+    kakaoButtonContainer: {
+      backgroundColor: '#fee503',
+    },
+    kakaoButtonText: {
+      color: '#181600',
     },
   });
 

@@ -14,7 +14,7 @@ export const postSignup = async ({
   await axiosInstance.post('/auth/signup', {email, password});
 };
 
-type ResponseToken = {
+export type ResponseToken = {
   accessToken: string;
   refreshToken: string;
 };
@@ -57,6 +57,12 @@ type RequestProfile = Pick<Profile, 'nickname' | 'imageUri'>;
 
 export const editProfile = async (body: RequestProfile): Promise<Profile> => {
   const {data} = await axiosInstance.patch('/auth/me', body);
+
+  return data;
+};
+
+export const kakaoLogin = async (token: string): Promise<ResponseToken> => {
+  const {data} = await axiosInstance.post('/auth/oauth/kakao', {token});
 
   return data;
 };
