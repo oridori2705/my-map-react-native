@@ -4,6 +4,7 @@ import {removeEncryptStorage, setEncryptStorage} from '@/utils/encryptStorage';
 import {useEffect} from 'react';
 import {Profile} from '@/types/domain';
 import {
+  appleLogin,
   editProfile,
   getAccessToken,
   getProfile,
@@ -70,6 +71,10 @@ function useEmailLogin(mutationOptions?: UseMutationCustomOptions) {
 function useKakaoLogin(mutationOptions?: UseMutationCustomOptions) {
   return useLogin(kakaoLogin, mutationOptions);
 }
+function useAppleLogin(mutationOptions?: UseMutationCustomOptions) {
+  return useLogin(appleLogin, mutationOptions);
+}
+
 /**
  * refreshToken을 이용해 주기적으로 accessToken을 갱신하는 훅
  * - 일정 시간마다(getAccessToken API를) 호출해 accessToken 재발급
@@ -160,6 +165,7 @@ const useAuth = () => {
   const signupMutation = useSignup();
   const loginMutation = useEmailLogin();
   const kakaoLoginMutation = useKakaoLogin();
+  const appleLoginMutation = useAppleLogin();
   const refreshTokenQuery = useGetRefreshToken();
   const {data, isSuccess: isLogin} = useGetProfile({
     enabled: refreshTokenQuery.isSuccess,
@@ -177,6 +183,7 @@ const useAuth = () => {
     signupMutation,
     loginMutation,
     kakaoLoginMutation,
+    appleLoginMutation,
     isLogin,
     logoutMutation,
     profileMutation,
