@@ -2,7 +2,6 @@ import {StackScreenProps} from '@react-navigation/stack';
 import React from 'react';
 import {
   Dimensions,
-  Image,
   Platform,
   ScrollView,
   StyleSheet,

@@ -5,7 +5,6 @@ import {
 } from '@react-navigation/drawer';
 import React from 'react';
 import {
-  Image,
   Platform,
   Pressable,
   SafeAreaView,

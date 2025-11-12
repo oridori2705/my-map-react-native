@@ -2,7 +2,6 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {
   Dimensions,
-  Image,
   Platform,
   Pressable,
   StyleSheet,

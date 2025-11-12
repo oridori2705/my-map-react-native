@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  Keyboard,
-  Platform,
-  Pressable,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {Keyboard, Platform, Pressable, StyleSheet, View} from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 
 import {validateEditProfile} from '@/utils/validation';

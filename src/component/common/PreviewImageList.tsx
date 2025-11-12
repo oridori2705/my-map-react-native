@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Platform, Pressable, ScrollView, StyleSheet} from 'react-native';
+import {Platform, Pressable, ScrollView, StyleSheet} from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 
 import {baseUrls} from '@/api/axios';

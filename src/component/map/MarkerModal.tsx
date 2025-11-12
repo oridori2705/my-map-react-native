@@ -3,7 +3,6 @@ import {colors} from '@/constant/colors';
 import useGetPost from '@/hooks/queries/useGetPost';
 import React from 'react';
 import {
-  Image,
   Modal,
   Platform,
   Pressable,

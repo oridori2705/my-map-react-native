@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {
   Dimensions,
   FlatList,
-  Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Platform,
