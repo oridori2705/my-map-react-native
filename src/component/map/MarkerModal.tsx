@@ -16,6 +16,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import {getDateWithSeparator} from '@/utils/date';
 import {useNavigation} from '@react-navigation/native';
 import useThemeStore, {Theme} from '../../store/theme';
+import FastImage from 'react-native-fast-image';
 
 interface MarkerModalProps {
   markerId: number;
@@ -54,14 +55,14 @@ const MarkerModal = ({markerId, isVisible, hide}: MarkerModalProps) => {
             <View style={styles.cardAlign}>
               {post.imageUris.length > 0 && (
                 <View style={styles.imageContainer}>
-                  <Image
+                  <FastImage
                     style={styles.image}
                     source={{
                       uri: `${
                         Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
                       }/${post.imageUris[0]?.uri}`,
                     }}
-                    resizeMode="cover"
+                    resizeMode={FastImage.resizeMode.cover}
                   />
                 </View>
               )}

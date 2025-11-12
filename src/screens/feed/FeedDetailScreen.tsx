@@ -24,6 +24,7 @@ import FeedDetailActionSheet from '@/component/feed/FeedDetailActionSheet';
 import useModal from '@/hooks/useModal';
 import useMutateFavoritePost from '@/hooks/queries/useMutateFavoritePost';
 import useThemeStore, {Theme} from '../../store/theme';
+import FastImage from 'react-native-fast-image';
 
 type Props = StackScreenProps<FeedStackParamList, 'FeedDetail'>;
 
@@ -75,14 +76,14 @@ const FeedDetailScreen = ({route}: Props) => {
       <ScrollView>
         <View style={styles.imageContainer}>
           {post.imageUris.length > 0 && (
-            <Image
+            <FastImage
               style={styles.image}
               source={{
                 uri: `${
                   Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
                 }/${post.imageUris[0].uri}`,
               }}
-              resizeMode="cover"
+              resizeMode={FastImage.resizeMode.cover}
             />
           )}
           {post.imageUris.length === 0 && (

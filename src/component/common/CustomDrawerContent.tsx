@@ -19,6 +19,7 @@ import {useNavigation} from '@react-navigation/native';
 import useAuth from '@/hooks/queries/useAuth';
 import {baseUrls} from '@/api/axios';
 import useThemeStore, {Theme} from '../../store/theme';
+import FastImage from 'react-native-fast-image';
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const {theme} = useThemeStore();
@@ -34,7 +35,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         contentContainerStyle={styles.contentContainer}>
         <Pressable style={styles.profileContainer}>
           <View style={styles.userImageContainer}>
-            <Image
+            <FastImage
               source={
                 auth.imageUri
                   ? {

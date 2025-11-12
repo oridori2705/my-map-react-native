@@ -13,6 +13,7 @@ import {
 } from '@react-navigation/native';
 import {FeedStackParamList} from '../../types/navigation';
 import useThemeStore, {Theme} from '../../store/theme';
+import FastImage from 'react-native-fast-image';
 
 interface PreviewImageListProps {
   imageUris: ImageUri[];
@@ -46,14 +47,14 @@ function PreviewImageList({
             key={uri}
             style={styles.imageContainer}
             onPress={() => handlePressImage(index)}>
-            <Image
+            <FastImage
               style={styles.image}
               source={{
                 uri: `${
                   Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
                 }/${uri}`,
               }}
-              resizeMode="cover"
+              resizeMode={FastImage.resizeMode.cover}
             />
             {showDeleteButton && (
               <Pressable

@@ -16,6 +16,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {FeedStackParamList} from '../../types/navigation';
 import {useNavigation} from '@react-navigation/native';
 import useThemeStore, {Theme} from '../../store/theme';
+import FastImage from 'react-native-fast-image';
 
 interface FeedItemProps {
   post: Post;
@@ -33,14 +34,14 @@ const FeedItem = ({post}: FeedItemProps) => {
       onPress={() => navigation.navigate('FeedDetail', {id: post.id})}>
       {post.imageUris.length > 0 && (
         <View style={styles.imageContainer}>
-          <Image
+          <FastImage
             style={styles.image}
             source={{
               uri: `${
                 Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
               }/${post.imageUris[0].uri}`,
             }}
-            resizeMode="cover"
+            resizeMode={FastImage.resizeMode.cover}
           />
         </View>
       )}

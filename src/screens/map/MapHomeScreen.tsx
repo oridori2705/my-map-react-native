@@ -1,7 +1,8 @@
 import {useState} from 'react';
 import {ActivityIndicator, Alert, StyleSheet, View} from 'react-native';
 
-import MapView, {LatLng, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import {LatLng, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView from 'react-native-map-clustering';
 import DrawerButton from '@/component/common/DrawerButton';
 import {colors} from '@/constant/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';

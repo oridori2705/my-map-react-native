@@ -18,6 +18,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {baseUrls} from '@/api/axios';
 import useThemeStore, {Theme} from '../../store/theme';
+import FastImage from 'react-native-fast-image';
 
 interface ImageCarouselProps {
   images: ImageUri[];
@@ -53,14 +54,14 @@ const ImageCarousel = ({images, pressedIndex}: ImageCarouselProps) => {
         data={images}
         renderItem={({item}) => (
           <View style={{width: deviceWidth}}>
-            <Image
+            <FastImage
               style={styles.image}
               source={{
                 uri: `${
                   Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
                 }/${item.uri}`,
               }}
-              resizeMode="contain"
+              resizeMode={FastImage.resizeMode.contain}
             />
           </View>
         )}

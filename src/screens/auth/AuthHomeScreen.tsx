@@ -19,6 +19,7 @@ import appleAuth, {
   AppleButton,
 } from '@invertase/react-native-apple-authentication';
 import Toast from 'react-native-toast-message';
+import FastImage from 'react-native-fast-image';
 
 type Navigation = StackNavigationProp<AuthStackParamList>;
 
@@ -58,10 +59,10 @@ const AuthHomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image
+        <FastImage
           source={require('@/assets/My-Map.png')}
           style={styles.image}
-          resizeMode="contain"
+          resizeMode={FastImage.resizeMode.contain}
         />
       </View>
       <View style={styles.buttonContainer}>

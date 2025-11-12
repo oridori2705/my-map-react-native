@@ -21,6 +21,7 @@ import EditProfileActionSheet from '@/component/setting/EditProfileActionSheet';
 import CustomInput from '@/component/common/CustomInput';
 import Toast from 'react-native-toast-message';
 import useThemeStore, {Theme} from '../../store/theme';
+import FastImage from 'react-native-fast-image';
 interface EditProfileScreenProps {}
 
 const EditProfileScreen = ({}: EditProfileScreenProps) => {
@@ -75,14 +76,14 @@ const EditProfileScreen = ({}: EditProfileScreenProps) => {
                 color={colors[theme].GRAY_500}
               />
             ) : (
-              <Image
+              <FastImage
                 source={{
                   uri: `${
                     Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
                   }/${imagePicker.imageUris[0]?.uri}`,
                 }}
                 style={styles.image}
-                resizeMode="cover"
+                resizeMode={FastImage.resizeMode.cover}
               />
             )}
           </Pressable>
