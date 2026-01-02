@@ -88,9 +88,11 @@ const styling = (theme: Theme) =>
       width: '100%',
       height: '100%',
       borderRadius: 35,
+      backgroundColor: colors[theme].GRAY_200,
     },
     nickname: {
       fontSize: 14,
+      color: colors[theme].BLACK,
     },
     bottomContainer: {
       flexDirection: 'row',
@@ -101,6 +103,7 @@ const styling = (theme: Theme) =>
     },
     menuText: {
       fontSize: 15,
+      color: colors[theme].BLACK,
     },
     bottomMenu: {
       flexDirection: 'row',
