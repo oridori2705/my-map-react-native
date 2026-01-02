@@ -13,7 +13,6 @@ const useMutateCreatePost = (mutationOptions?: UseMutationCustomOptions) => {
       queryClient.invalidateQueries({
         queryKey: [queryKeys.POST, queryKeys.GET_POSTS],
       });
-      console.log('Post created successfully:', newPost);
 
       queryClient.setQueryData<Marker[]>(
         [queryKeys.MARKER, queryKeys.GET_MARKERS],
@@ -25,9 +24,7 @@ const useMutateCreatePost = (mutationOptions?: UseMutationCustomOptions) => {
             color: newPost.color,
             score: newPost.score,
           };
-          console.log(
-            existingMarkers ? [...existingMarkers, newMarker] : [newMarker],
-          );
+
           return existingMarkers
             ? [...existingMarkers, newMarker]
             : [newMarker];

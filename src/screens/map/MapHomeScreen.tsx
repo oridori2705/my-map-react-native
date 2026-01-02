@@ -50,14 +50,7 @@ const MapHomeScreen = () => {
   const {mapRef, moveMapView, handleChangeDelta} = useMoveMapView();
 
   //마커 데이터 불러오기
-  const {data: markers = []} = useGetMarkers({
-    select: data =>
-      data.filter(
-        marker =>
-          filters[marker.color] === true &&
-          filters[String(marker.score)] === true,
-      ),
-  });
+  const {data: markers = []} = useGetMarkers();
 
   //마커 모달 상태(마커 클릭 시 모달)
   const markerModal = useModal();
@@ -112,6 +105,8 @@ const MapHomeScreen = () => {
     );
   }
 
+  console.log(markers);
+
   return (
     <>
       <DrawerButton
@@ -131,17 +126,23 @@ const MapHomeScreen = () => {
         onRegionChangeComplete={handleChangeDelta}
         onLongPress={({nativeEvent}) =>
           setSelectLocation(nativeEvent.coordinate)
-        }>
-        {markers.map(({id, color, score, ...coordinate}) => (
-          <CustomMarker
-            key={id}
-            color={color}
-            score={score}
-            coordinate={coordinate}
-            onPress={() => handlePressMarker(id, coordinate)}
-          />
-        ))}
-
+        }
+        onPress={() => setSelectLocation(null)}>
+        {markers
+          .filter(
+            marker =>
+              filters[marker.color] === true &&
+              filters[String(marker.score)] === true,
+          )
+          .map(({id, color, score, ...coordinate}) => (
+            <CustomMarker
+              key={id}
+              color={color}
+              score={score}
+              coordinate={coordinate}
+              onPress={() => handlePressMarker(id, coordinate)}
+            />
+          ))}
         {selectLocation && <Marker coordinate={selectLocation} />}
       </MapView>
       <View style={styles.buttonList}>

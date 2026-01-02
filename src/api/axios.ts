@@ -4,8 +4,8 @@ import {Platform} from 'react-native';
 import Toast from 'react-native-toast-message';
 
 export const baseUrls = {
-  android: 'http://10.0.2.2:3030',
-  ios: 'http://localhost:3030',
+  android: 'http://3.34.199.209:3030',
+  ios: 'http://3.34.199.209:3030',
 };
 
 const axiosInstance = axios.create({
@@ -18,14 +18,21 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(
   response => response,
   error => {
-    // 네트워크 에러인 경우
     if (!error.response) {
       Toast.show({
         type: 'error',
-        text1: error.response.data?.message || '네트워크 에러가 발생했습니다.',
+        text1: error.message || '네트워크 에러가 발생했습니다.',
+        position: 'bottom',
+      });
+    } else {
+      Toast.show({
+        type: 'error',
+        text1:
+          error.response.data?.message || '요청 처리 중 오류가 발생했습니다.',
         position: 'bottom',
       });
     }
+
     return Promise.reject(error);
   },
 );

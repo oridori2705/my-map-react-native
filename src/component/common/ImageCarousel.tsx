@@ -56,9 +56,7 @@ const ImageCarousel = ({images, pressedIndex}: ImageCarouselProps) => {
             <FastImage
               style={styles.image}
               source={{
-                uri: `${
-                  Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
-                }/${item.uri}`,
+                uri: `${item.uri}`,
               }}
               resizeMode={FastImage.resizeMode.contain}
             />

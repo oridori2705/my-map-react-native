@@ -78,9 +78,7 @@ const FeedDetailScreen = ({route}: Props) => {
             <FastImage
               style={styles.image}
               source={{
-                uri: `${
-                  Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
-                }/${post.imageUris[0].uri}`,
+                uri: `${post.imageUris[0].uri}`,
               }}
               resizeMode={FastImage.resizeMode.cover}
             />

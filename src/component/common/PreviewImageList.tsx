@@ -50,9 +50,7 @@ function PreviewImageList({
             <FastImage
               style={styles.image}
               source={{
-                uri: `${
-                  Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
-                }/${uri}`,
+                uri: `${uri}`,
               }}
               resizeMode={FastImage.resizeMode.cover}
             />

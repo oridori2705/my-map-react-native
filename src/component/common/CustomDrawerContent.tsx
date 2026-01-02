@@ -38,9 +38,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
               source={
                 auth.imageUri
                   ? {
-                      uri: `${
-                        Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
-                      }/${auth.imageUri}`,
+                      uri: `${auth.imageUri}`,
                     }
                   : require('@/assets/default-user.png')
               }

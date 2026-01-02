@@ -41,6 +41,10 @@ const SearchRegionResult = ({regionInfo}: SearchRegionResultProps) => {
 
     setSelectLocation(location);
     setMoveLocation(location);
+
+    setTimeout(() => {
+      setMoveLocation(null);
+    }, 500);
   };
 
   return (

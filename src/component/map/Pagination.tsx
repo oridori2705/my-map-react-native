@@ -49,7 +49,7 @@ const Pagination = ({
     {length: endPage - startPage + 1},
     (_, i) => startPage + i,
   );
-  console.log(pages);
+
   return (
     <View style={styles.container}>
       {/* 이전 페이지 버튼 */}

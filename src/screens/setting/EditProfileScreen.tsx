@@ -71,9 +71,7 @@ const EditProfileScreen = ({}: EditProfileScreenProps) => {
             ) : (
               <FastImage
                 source={{
-                  uri: `${
-                    Platform.OS === 'ios' ? baseUrls.ios : baseUrls.android
-                  }/${imagePicker.imageUris[0]?.uri}`,
+                  uri: `$${imagePicker.imageUris[0]?.uri}`,
                 }}
                 style={styles.image}
                 resizeMode={FastImage.resizeMode.cover}

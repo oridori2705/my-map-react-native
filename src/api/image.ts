@@ -6,6 +6,5 @@ export const uploadImages = async (body: FormData): Promise<string[]> => {
       'Content-Type': 'multipart/form-data',
     },
   });
-
   return data;
 };

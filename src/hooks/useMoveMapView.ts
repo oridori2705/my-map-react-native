@@ -30,7 +30,7 @@ const useMoveMapView = () => {
     if (moveLocation) {
       moveMapView(moveLocation);
     }
-  }, [moveLocation, moveMapView, setMoveLocation]);
+  }, [moveLocation, moveMapView]);
 
   return {mapRef, moveMapView, handleChangeDelta};
 };
