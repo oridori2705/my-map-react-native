@@ -98,6 +98,16 @@ const DrawerNavigation = () => {
           title: '피드',
           headerShown: false,
         }}
+        listeners={({navigation}) => ({
+          drawerItemPress: e => {
+            e.preventDefault(); // 기본 동작 막기
+            // FeedList로 리셋하면서 이동
+            (navigation as any).navigate('Feed', {
+              screen: 'FeedList',
+              initial: true,
+            });
+          },
+        })}
       />
       <Drawer.Screen
         name="Calendar"

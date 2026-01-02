@@ -53,6 +53,7 @@ const FeedDetailScreen = ({route}: Props) => {
 
     navigation.navigate('Map', {
       screen: 'MapHome',
+      initial: false,
     });
   };
 
