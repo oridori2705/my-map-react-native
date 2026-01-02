@@ -29,8 +29,11 @@ const useMoveMapView = () => {
   useEffect(() => {
     if (moveLocation) {
       moveMapView(moveLocation);
+      setTimeout(() => {
+        setMoveLocation(null);
+      }, 500);
     }
-  }, [moveLocation, moveMapView]);
+  }, [moveLocation, moveMapView, setMoveLocation]);
 
   return {mapRef, moveMapView, handleChangeDelta};
 };
