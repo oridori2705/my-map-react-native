@@ -37,6 +37,9 @@ const MapHomeScreen = () => {
   //마커 필터링 전역 상태
   const {filters} = useFilterStore();
 
+  // 필터 상태를 key로 변환
+  const filterKey = JSON.stringify(filters);
+
   // 필터가 하나라도 비활성화되어 있으면 true 반환
   const isFilterActive = Object.values(filters).some(value => !value);
 
@@ -105,8 +108,6 @@ const MapHomeScreen = () => {
     );
   }
 
-  console.log(markers);
-
   return (
     <>
       <DrawerButton
@@ -115,6 +116,7 @@ const MapHomeScreen = () => {
       />
       <MapView
         userInterfaceStyle={theme}
+        key={filterKey}
         googleMapId="f397ec96980a97c3c96a731d"
         style={styles.container}
         ref={mapRef}
