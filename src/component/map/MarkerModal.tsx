@@ -15,7 +15,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import {getDateWithSeparator} from '@/utils/date';
 import {useNavigation} from '@react-navigation/native';
 import useThemeStore, {Theme} from '../../store/theme';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 
 interface MarkerModalProps {
   markerId: number;

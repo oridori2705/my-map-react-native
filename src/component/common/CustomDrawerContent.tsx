@@ -18,7 +18,7 @@ import {useNavigation} from '@react-navigation/native';
 import useAuth from '@/hooks/queries/useAuth';
 import {baseUrls} from '@/api/axios';
 import useThemeStore, {Theme} from '../../store/theme';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const {theme} = useThemeStore();

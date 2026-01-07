@@ -23,8 +23,7 @@ import FeedDetailActionSheet from '@/component/feed/FeedDetailActionSheet';
 import useModal from '@/hooks/useModal';
 import useMutateFavoritePost from '@/hooks/queries/useMutateFavoritePost';
 import useThemeStore, {Theme} from '../../store/theme';
-import FastImage from 'react-native-fast-image';
-
+import FastImage from '@d11/react-native-fast-image';
 type Props = StackScreenProps<FeedStackParamList, 'FeedDetail'>;
 
 const FeedDetailScreen = ({route}: Props) => {

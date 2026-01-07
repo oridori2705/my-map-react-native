@@ -14,7 +14,7 @@ import EditProfileActionSheet from '@/component/setting/EditProfileActionSheet';
 import CustomInput from '@/component/common/CustomInput';
 import Toast from 'react-native-toast-message';
 import useThemeStore, {Theme} from '../../store/theme';
-import FastImage from 'react-native-fast-image';
+import FastImage from '@d11/react-native-fast-image';
 interface EditProfileScreenProps {}
 
 const EditProfileScreen = ({}: EditProfileScreenProps) => {

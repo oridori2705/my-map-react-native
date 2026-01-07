@@ -17,8 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {baseUrls} from '@/api/axios';
 import useThemeStore, {Theme} from '../../store/theme';
-import FastImage from 'react-native-fast-image';
-
+import FastImage from '@d11/react-native-fast-image';
 interface ImageCarouselProps {
   images: ImageUri[];
   pressedIndex?: number;

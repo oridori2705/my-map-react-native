@@ -13,8 +13,7 @@ import {
 } from '@react-navigation/native';
 import {FeedStackParamList} from '../../types/navigation';
 import useThemeStore, {Theme} from '../../store/theme';
-import FastImage from 'react-native-fast-image';
-
+import FastImage from '@d11/react-native-fast-image';
 interface PreviewImageListProps {
   imageUris: ImageUri[];
   onDelete?: (uri: string) => void;
