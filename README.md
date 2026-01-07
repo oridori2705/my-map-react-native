@@ -348,8 +348,50 @@ npm install react-native-fast-image --legacy-peer-deps
 - Custom Drawer를 열고 닫을 때마다 메인 화면의 구글 맵이 언마운트/마운트 반복
 - 잦은 재렌더링으로 인한 앱 크래시 발생
 
+https://github.com/user-attachments/assets/153e308a-abcf-401d-8460-bc9231fb818b
+
 **원인 분석:**
 - React Navigation 7.x 최신 버전과 React Native 0.80의 호환성 이슈
 
-> 해당 문제는 해결 중
+**해결 방법:**
+React Navigation 버전을 안정화된 버전으로 다운그레이드
+```json
+{
+  "@react-navigation/drawer": "7.5.2",
+  "@react-navigation/native": "7.1.14",
+  "@react-navigation/stack": "7.4.2"
+}
+```
+
+**결과:**
+- ✅ 지도 컴포넌트가 불필요하게 재생성되지 않음
+- ✅ Drawer 사용 시 부드러운 애니메이션 유지
+- ✅ 앱 안정성 확보
+
+https://github.com/user-attachments/assets/a312dae9-877a-4c5c-92fc-e6a6698c2879
+
+
+### Issue 2: React Native Fast Image 호환성
+
+**문제:** React 19 버전과의 react-native-fast-image 버전 충돌
+
+react 19버전에서 react-native-fast-image가 설치안되는 이슈
+
+https://github.com/DylanVann/react-native-fast-image/issues/1073
+
+**해결:**
+해당 라이브러리를 fork하여 관리하고있는 라이브러리를 설치 후 사용
+https://www.npmjs.com/package/@d11/react-native-fast-image
+
+
+## 🚀 향후 개선 계획
+
+[] 장소 공유 기능 추가
+[] 오프라인 모드 지원
+[] 소셜 기능 강화 (친구 추가, 피드 공유)
+
+## 🔗 관련 블로그 링크
+- [버전 충돌 문제 해결](https://ydoag2003.tistory.com/537)
+- [안드로이드는 SafeAreaView를 사용하면 안돼?](https://ydoag2003.tistory.com/528)
+- [React Native 환경 변수 설정하기 물론 에러를 해결하며](https://ydoag2003.tistory.com/529)
 
