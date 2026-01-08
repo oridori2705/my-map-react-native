@@ -342,7 +342,7 @@ npm install react-native-fast-image --legacy-peer-deps
 
 ## 🔧 트러블슈팅
 
-### Issue 1: Drawer Navigation 사용 시 지도 언마운트 문제
+### 🚨Issue 1: Drawer Navigation 사용 시 지도 언마운트 문제
 
 **문제 상황:**
 - Custom Drawer를 열고 닫을 때마다 메인 화면의 구글 맵이 언마운트/마운트 반복
@@ -371,24 +371,24 @@ React Navigation 버전을 안정화된 버전으로 다운그레이드
 https://github.com/user-attachments/assets/a312dae9-877a-4c5c-92fc-e6a6698c2879
 
 
-### Issue 2: React Native Fast Image 호환성
+### 🚨Issue 2: React Native Fast Image 호환성
 
-**문제:** React 19 버전과의 react-native-fast-image 버전 충돌
-
-react 19버전에서 react-native-fast-image가 설치안되는 이슈
+**문제:** 
+- React 19 버전과의 react-native-fast-image 버전 충돌
+- react 19버전에서 react-native-fast-image가 설치안되는 이슈
 
 https://github.com/DylanVann/react-native-fast-image/issues/1073
 
 **해결:**
-해당 라이브러리를 fork하여 관리하고있는 라이브러리를 설치 후 사용
+- 해당 라이브러리를 fork하여 관리하고있는 라이브러리를 설치 후 사용
 https://www.npmjs.com/package/@d11/react-native-fast-image
 
 
 ## 🚀 향후 개선 계획
 
-[] 장소 공유 기능 추가
-[] 오프라인 모드 지원
-[] 소셜 기능 강화 (친구 추가, 피드 공유)
+- [ ] 장소 공유 기능 추가
+- [ ] 오프라인 모드 지원
+- [ ] 소셜 기능 강화 (친구 추가, 피드 공유)
 
 ## 🔗 관련 블로그 링크
 - [버전 충돌 문제 해결](https://ydoag2003.tistory.com/537)
